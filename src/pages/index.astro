@@ -1,17 +1,266 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <!-- ── NAV ── -->
+  <header class="sticky top-0 z-50 bg-[#F7F5F2]/90 backdrop-blur-sm border-b border-[#D6D2CC]">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      <span class="font-semibold text-[#1C1C1C] tracking-tight shrink-0">Scott McFall</span>
+      <nav class="hidden sm:flex items-center gap-6">
+        <a href="#services" class="nav-link text-sm text-[#6B7280] hover:text-[#1C1C1C] transition-colors">Services</a>
+        <a href="#work" class="nav-link text-sm text-[#6B7280] hover:text-[#1C1C1C] transition-colors">Work</a>
+        <a href="#process" class="nav-link text-sm text-[#6B7280] hover:text-[#1C1C1C] transition-colors">Process</a>
+      </nav>
+      <a
+        href="#contact"
+        class="text-sm font-semibold bg-[#D97706] text-white px-4 py-2 rounded-md hover:bg-[#B45309] hover:scale-[1.03] active:scale-[0.97] transition-all shrink-0"
+      >
+        Let's Work Together
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── HERO ── -->
+    <section class="max-w-3xl mx-auto px-6 pt-20 pb-16">
+      <p class="fade-up text-sm font-semibold tracking-widest uppercase text-[#D97706] mb-4" style="animation-delay: 0ms">AI Developer</p>
+      <h1 class="fade-up text-4xl sm:text-5xl font-bold leading-tight text-[#1C1C1C] mb-6" style="animation-delay: 80ms">
+        I build AI-powered tools and workflows for creators and founders.
+      </h1>
+      <p class="fade-up text-lg text-[#6B7280] mb-8 max-w-xl" style="animation-delay: 160ms">
+        From custom calculators to real-time web apps to post-production automation. I ship things that actually work, and I use AI to do it faster than most.
+      </p>
+      <a
+        href="#contact"
+        class="fade-up inline-block bg-[#D97706] text-white font-semibold px-6 py-3 rounded-md hover:bg-[#B45309] hover:scale-[1.03] active:scale-[0.97] transition-all"
+        style="animation-delay: 240ms"
+      >
+        Let's Work Together →
+      </a>
+    </section>
+
+    <!-- ── CREDIBILITY ROW ── -->
+    <section class="border-t border-b border-[#D6D2CC] bg-[#EDEAE6]">
+      <div class="max-w-3xl mx-auto px-6 py-6">
+        <p class="text-sm text-[#6B7280] text-center">
+          Projects shipped for <span class="text-[#1C1C1C] font-medium">Lewis Howes & School of Greatness</span>,
+          <span class="text-[#1C1C1C] font-medium">JJ Virgin</span>,
+          indie founders, schools, and content creators.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services" class="max-w-3xl mx-auto px-6 py-16">
+      <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">What I Build</h2>
+      <p class="text-[#6B7280] mb-10">I keep my focus narrow so I can do each thing well.</p>
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="scroll-fade bg-[#EDEAE6] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 0ms">
+          <div class="text-2xl mb-3">🚀</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Landing Pages & Lead Capture</h3>
+          <p class="text-sm text-[#6B7280]">Fast pages that look good and actually load. Forms, CTAs, and tracking included.</p>
+        </div>
+        <div class="scroll-fade bg-[#EDEAE6] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 80ms">
+          <div class="text-2xl mb-3">🛠️</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Custom Tools & Calculators</h3>
+          <p class="text-sm text-[#6B7280]">Lead magnets, configurators, calculators. Interactive tools your audience uses, not just visits.</p>
+        </div>
+        <div class="scroll-fade bg-[#EDEAE6] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 160ms">
+          <div class="text-2xl mb-3">⚙️</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Workflow Automation</h3>
+          <p class="text-sm text-[#6B7280]">Cut the repetitive stuff. File processing, data pipelines, internal tools built to save real hours.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CASE STUDIES ── -->
+    <section id="work" class="bg-[#EDEAE6] border-t border-[#D6D2CC]">
+      <div class="max-w-3xl mx-auto px-6 py-16">
+        <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">Work</h2>
+        <p class="text-[#6B7280] mb-10">Real projects, real outcomes.</p>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <!-- Project 1 -->
+          <div class="scroll-fade bg-[#F7F5F2] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 0ms">
+            <p class="text-xs font-semibold tracking-widest uppercase text-[#D97706] mb-2">Health & Nutrition</p>
+            <h3 class="font-bold text-[#1C1C1C] text-lg mb-3">Protein Calculator — JJ Virgin</h3>
+            <ul class="text-sm text-[#6B7280] space-y-2">
+              <li>→ Built for bestselling author & health expert JJ Virgin</li>
+              <li>→ Personalized daily protein targets based on user inputs</li>
+              <li>→ Embedded as a lead capture tool on her site</li>
+              <li>→ Helps grow her email list on autopilot</li>
+            </ul>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="scroll-fade bg-[#F7F5F2] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 80ms">
+            <p class="text-xs font-semibold tracking-widest uppercase text-[#D97706] mb-2">Real-Time Web App</p>
+            <h3 class="font-bold text-[#1C1C1C] text-lg mb-3">Live Auction Site — School Fundraiser</h3>
+            <ul class="text-sm text-[#6B7280] space-y-2">
+              <li>→ Real-time bid updates without page refresh</li>
+              <li>→ Replaced a spreadsheet and clipboard process entirely</li>
+              <li>→ Handled concurrent bidders smoothly on event night</li>
+              <li>→ Shipped in days, not weeks</li>
+            </ul>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="scroll-fade bg-[#F7F5F2] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 0ms">
+            <p class="text-xs font-semibold tracking-widest uppercase text-[#D97706] mb-2">Workflow Automation</p>
+            <h3 class="font-bold text-[#1C1C1C] text-lg mb-3">MP3 ID3 Tag Batch Processor</h3>
+            <ul class="text-sm text-[#6B7280] space-y-2">
+              <li>→ Automates writing ID3 metadata tags across large audio libraries</li>
+              <li>→ Eliminated hours of manual file editing per batch</li>
+              <li>→ Custom rules engine for consistent tagging standards</li>
+              <li>→ Built for producers managing large back-catalog audio libraries</li>
+            </ul>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="scroll-fade bg-[#F7F5F2] rounded-xl p-6 hover:shadow-md transition-shadow duration-300" style="animation-delay: 80ms">
+            <p class="text-xs font-semibold tracking-widest uppercase text-[#D97706] mb-2">Custom Interface</p>
+            <h3 class="font-bold text-[#1C1C1C] text-lg mb-3">YouTube Competitor Interface</h3>
+            <ul class="text-sm text-[#6B7280] space-y-2">
+              <li>→ Custom video browsing UI built on top of YouTube's API</li>
+              <li>→ Tailored UX for a specific content niche and audience</li>
+              <li>→ Strips out ads, recommendations, and noise</li>
+              <li>→ Shows what you can build when you're not limited by a platform</li>
+            </ul>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="scroll-fade bg-[#F7F5F2] rounded-xl p-6 sm:col-span-2 hover:shadow-md transition-shadow duration-300" style="animation-delay: 40ms">
+            <p class="text-xs font-semibold tracking-widest uppercase text-[#D97706] mb-2">Podcast Post-Production</p>
+            <h3 class="font-bold text-[#1C1C1C] text-lg mb-3">AI Workflow Automation — Lewis Howes / School of Greatness</h3>
+            <ul class="text-sm text-[#6B7280] space-y-2 sm:columns-2">
+              <li>→ Built AI-assisted tools to automate parts of the post-production process for School of Greatness</li>
+              <li>→ Cut out manual steps between recording and publish-ready files</li>
+              <li>→ Faster episode turnaround without adding headcount</li>
+              <li>→ Designed to keep up with a consistent weekly publishing schedule</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROCESS ── -->
+    <section id="process" class="max-w-3xl mx-auto px-6 py-16">
+      <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">How I Work</h2>
+      <p class="text-[#6B7280] mb-10">Simple, fast, and collaborative.</p>
+
+      <div class="grid sm:grid-cols-3 gap-8">
+        <div class="scroll-fade text-center" style="animation-delay: 0ms">
+          <div class="w-8 h-8 rounded-full bg-[#D97706] text-white flex items-center justify-center font-bold text-sm mb-4 mx-auto">1</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Discover</h3>
+          <p class="text-sm text-[#6B7280]">We talk through your goal, your audience, and what success actually looks like. Better to ask the hard questions up front.</p>
+        </div>
+        <div class="scroll-fade text-center" style="animation-delay: 100ms">
+          <div class="w-8 h-8 rounded-full bg-[#D97706] text-white flex items-center justify-center font-bold text-sm mb-4 mx-auto">2</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Build</h3>
+          <p class="text-sm text-[#6B7280]">I build fast using AI-assisted development. You see working software early, not mockups or decks.</p>
+        </div>
+        <div class="scroll-fade text-center" style="animation-delay: 200ms">
+          <div class="w-8 h-8 rounded-full bg-[#D97706] text-white flex items-center justify-center font-bold text-sm mb-4 mx-auto">3</div>
+          <h3 class="font-semibold text-[#1C1C1C] mb-2">Launch</h3>
+          <p class="text-sm text-[#6B7280]">We ship, test, and adjust. You end up with something live that you own and can maintain, not a black box.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="bg-[#EDEAE6] border-t border-[#D6D2CC]">
+      <div class="max-w-2xl mx-auto px-6 py-16">
+        <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">Let's Work Together</h2>
+        <p class="text-[#6B7280] mb-8">Tell me what you're building. I'll tell you if and how I can help.</p>
+
+        <!-- Replace YOUR_FORMSPREE_ID with your actual ID from https://formspree.io -->
+        <form
+          action="https://formspree.io/f/xwvnnpoy"
+          method="POST"
+          class="space-y-5"
+        >
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="name" class="block text-sm font-medium text-[#1C1C1C] mb-1">Your name</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                required
+                placeholder="Jane Smith"
+                class="w-full rounded-md border border-[#D6D2CC] bg-[#F7F5F2] px-4 py-2.5 text-sm text-[#1C1C1C] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#D97706]"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-[#1C1C1C] mb-1">Email address</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                required
+                placeholder="jane@example.com"
+                class="w-full rounded-md border border-[#D6D2CC] bg-[#F7F5F2] px-4 py-2.5 text-sm text-[#1C1C1C] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#D97706]"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="project" class="block text-sm font-medium text-[#1C1C1C] mb-1">Tell me about your project</label>
+            <textarea
+              id="project"
+              name="project"
+              rows="5"
+              required
+              placeholder="What are you trying to build? What's the goal? What's the timeline?"
+              class="w-full rounded-md border border-[#D6D2CC] bg-[#F7F5F2] px-4 py-2.5 text-sm text-[#1C1C1C] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#D97706] resize-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full sm:w-auto bg-[#D97706] text-white font-semibold px-8 py-3 rounded-md hover:bg-[#B45309] transition-colors"
+          >
+            Send Message →
+          </button>
+        </form>
+
+        <!-- FAQ -->
+        <div class="mt-14 space-y-6">
+          <h3 class="font-semibold text-[#1C1C1C] text-lg">Quick answers</h3>
+          <div>
+            <p class="font-medium text-[#1C1C1C] text-sm">What kinds of projects are a good fit?</p>
+            <p class="text-sm text-[#6B7280] mt-1">Custom tools, calculators, landing pages, and small-to-mid web apps. If you have a clear problem and a real audience, reach out.</p>
+          </div>
+          <div>
+            <p class="font-medium text-[#1C1C1C] text-sm">How fast do you typically ship?</p>
+            <p class="text-sm text-[#6B7280] mt-1">Most projects have something working within a week. Full launches are usually 2 to 4 weeks depending on scope.</p>
+          </div>
+          <div>
+            <p class="font-medium text-[#1C1C1C] text-sm">Do you work with non-technical clients?</p>
+            <p class="text-sm text-[#6B7280] mt-1">Yes, and most of my clients are. You know your audience and your problem. I handle the technical side.</p>
+          </div>
+          <div>
+            <p class="font-medium text-[#1C1C1C] text-sm">What does "AI-assisted" mean in practice?</p>
+            <p class="text-sm text-[#6B7280] mt-1">It means I use AI tools throughout the build process to move faster. Same quality, more output, shorter timelines.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="border-t border-[#D6D2CC]">
+    <div class="max-w-3xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-[#6B7280]">© 2026 Scott McFall. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a
+          href="https://github.com/scottmcfalldev-bot"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-[#6B7280] hover:text-[#1C1C1C] transition-colors"
+        >
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+</Layout>
