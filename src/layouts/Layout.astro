@@ -4,14 +4,29 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = "Scott McFall — AI Developer for Creators & Founders",
   description = "I build AI-powered tools, automations, and landing pages for creators and founders. Let's turn your idea into a working product.",
+  ogImage = "/profile.svg",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Scott McFall",
+  url: "https://scottmcfall.com",
+  jobTitle: "AI Developer",
+  description,
+  sameAs: [
+    "https://github.com/scottmcfalldev-bot",
+  ],
+};
 ---
 
 <!doctype html>
@@ -19,14 +34,34 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Scott McFall" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#D97706" />
 
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Scott McFall" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:alt" content="Scott McFall — AI Developer for Creators & Founders" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content="Scott McFall — AI Developer for Creators & Founders" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -38,8 +73,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <title>{title}</title>
   </head>
   <body>
     <slot />

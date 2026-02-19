@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="0 0 112 112" role="img" aria-label="Scott McFall">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#D97706"/>
+      <stop offset="1" stop-color="#F7A733"/>
+    </linearGradient>
+  </defs>
+  <rect width="112" height="112" rx="16" fill="#F7F5F2"/>
+  <circle cx="56" cy="36" r="22" fill="url(#g)"/>
+  <rect x="16" y="68" width="80" height="28" rx="8" fill="#EDEAE6"/>
+  <text x="56" y="46" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="20" font-weight="700" fill="#fff" text-anchor="middle" alignment-baseline="middle">SM</text>
+</svg>
