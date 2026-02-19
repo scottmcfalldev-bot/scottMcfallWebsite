@@ -75,10 +75,10 @@ import Layout from "../layouts/Layout.astro";
     </section>
 
     <!-- ── ROI CALCULATOR ── -->
-    <section class="border-t border-[#D6D2CC] bg-[#F7F5F2]">
+    <section class="border-t border-[#D6D2CC] bg-gradient-to-br from-[#D97706] to-[#B45309]">
       <div class="max-w-3xl mx-auto px-6 py-16">
-        <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">See What Automation Could Save You</h2>
-        <p class="text-[#6B7280] mb-10">Pick the tasks eating your time. We'll show you the real cost — and what you'd save by automating them. (Add as many as you want.)</p>
+        <h2 class="text-2xl font-bold text-white mb-2">See What Automation Could Save You</h2>
+        <p class="text-white/90 mb-10">Pick the tasks eating your time. We'll show you the real cost — and what you'd save by automating them. (Add as many as you want.)</p>
 
         <div class="space-y-6">
           <!-- Hourly Rate Input & Add Task Button -->
@@ -138,35 +138,35 @@ import Layout from "../layouts/Layout.astro";
           </div>
 
           <!-- Results Panel -->
-          <div id="resultsPanel" class="hidden bg-gradient-to-br from-[#D97706] to-[#B45309] rounded-xl p-8 text-white">
+          <div id="resultsPanel" class="hidden bg-white rounded-xl p-8 text-[#1C1C1C] border border-[#D6D2CC]">
             <div class="grid sm:grid-cols-2 gap-6 mb-6">
               <div>
-                <p class="text-sm opacity-90 mb-1">Total time spent weekly</p>
+                <p class="text-sm text-[#6B7280] mb-1">Total time spent weekly</p>
                 <p class="text-4xl font-bold" id="totalHours">0</p>
-                <p class="text-sm opacity-75 mt-1" id="weekEquivalent">—</p>
+                <p class="text-sm text-[#6B7280] mt-1" id="weekEquivalent">—</p>
               </div>
               <div>
-                <p class="text-sm opacity-90 mb-1">Annual cost at current rate</p>
+                <p class="text-sm text-[#6B7280] mb-1">Annual cost at current rate</p>
                 <p class="text-4xl font-bold" id="annualCost">$0</p>
               </div>
             </div>
 
-            <div class="border-t border-white/20 pt-6">
+            <div class="border-t border-[#D6D2CC] pt-6">
               <div class="flex items-center justify-between mb-2">
-                <p class="text-sm opacity-90">Potential savings with automation</p>
-                <span class="text-xs opacity-75 bg-white/10 px-2 py-1 rounded">~70% time reduction</span>
+                <p class="text-sm text-[#6B7280]">Potential savings with automation</p>
+                <span class="text-xs text-[#D97706] bg-[#FEF3C7] px-2 py-1 rounded font-semibold">~70% time reduction</span>
               </div>
-              <p class="text-xs opacity-75 mb-3">Most automations save 60-80% of manual work. You'll still need some oversight, but the heavy lifting is handled.</p>
+              <p class="text-xs text-[#6B7280] mb-3">Most automations save 60-80% of manual work. You'll still need some oversight, but the heavy lifting is handled.</p>
               <div class="flex items-center gap-3 mb-2">
                 <label for="timeHorizon" class="text-sm font-semibold">Over</label>
-                <select id="timeHorizon" class="bg-white/20 border border-white/30 rounded-md px-3 py-1 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-white/50">
+                <select id="timeHorizon" class="bg-[#F7F5F2] border border-[#D6D2CC] rounded-md px-3 py-1 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#D97706]">
                   <option value="1">1 year</option>
                   <option value="3" selected>3 years</option>
                   <option value="5">5 years</option>
                 </select>
               </div>
-              <p class="text-5xl font-bold mb-2" id="totalSavings">$0</p>
-              <p class="text-sm opacity-75" id="timeSaved">Plus X hours back</p>
+              <p class="text-5xl font-bold mb-2 text-[#D97706]" id="totalSavings">$0</p>
+              <p class="text-sm text-[#6B7280]" id="timeSaved">Plus X hours back</p>
             </div>
 
             <div class="mt-6 pt-6 border-t border-white/20">
@@ -178,7 +178,7 @@ import Layout from "../layouts/Layout.astro";
 
             <a
               href="#contact"
-              class="mt-6 block w-full bg-white text-[#D97706] font-bold px-6 py-3 rounded-md hover:bg-[#F7F5F2] transition-colors text-center"
+              class="mt-6 block w-full bg-[#D97706] text-white font-bold px-6 py-3 rounded-md hover:bg-[#B45309] transition-colors text-center"
             >
               Let's automate one of these →
             </a>
@@ -546,10 +546,5 @@ import Layout from "../layouts/Layout.astro";
     // Recalculate on hourly rate or time horizon change
     hourlyRateInput.addEventListener('input', calculate);
     timeHorizonSelect.addEventListener('change', calculate);
-
-    // Initialize with one example task
-    setTimeout(() => {
-      addTask('Email management & inbox triage');
-    }, 500);
   </script>
 </Layout>
