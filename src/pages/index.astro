@@ -74,6 +74,119 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </section>
 
+    <!-- ── ROI CALCULATOR ── -->
+    <section class="border-t border-[#D6D2CC] bg-[#F7F5F2]">
+      <div class="max-w-3xl mx-auto px-6 py-16">
+        <h2 class="text-2xl font-bold text-[#1C1C1C] mb-2">See What Automation Could Save You</h2>
+        <p class="text-[#6B7280] mb-10">Pick the tasks eating your time. We'll show you the real cost — and what you'd save by automating them. (Add as many as you want.)</p>
+
+        <div class="space-y-6">
+          <!-- Hourly Rate Input & Add Task Button -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-xl p-6 border border-[#D6D2CC]">
+              <label for="hourlyRate" class="block text-sm font-semibold text-[#1C1C1C] mb-3">What's your hourly rate?</label>
+              <div class="flex items-center gap-3">
+                <span class="text-2xl text-[#6B7280]">$</span>
+                <input
+                  type="number"
+                  id="hourlyRate"
+                  value="50"
+                  min="10"
+                  max="500"
+                  step="5"
+                  class="text-3xl font-bold text-[#1C1C1C] bg-transparent border-0 border-b-2 border-[#D97706] focus:outline-none focus:border-[#B45309] w-32"
+                />
+                <span class="text-lg text-[#6B7280]">/ hour</span>
+              </div>
+            </div>
+
+            <button
+              id="addTaskBtn"
+              class="bg-[#EDEAE6] text-[#1C1C1C] font-semibold px-6 py-4 rounded-xl hover:bg-[#D6D2CC] transition-colors flex items-center justify-center gap-2"
+            >
+              <span class="text-xl">+</span> Add a Task
+            </button>
+          </div>
+
+          <!-- Task List -->
+          <div id="taskList" class="space-y-3">
+            <!-- Tasks will be inserted here -->
+          </div>
+
+          <!-- Task Presets (Initially Hidden) -->
+          <div id="taskPresets" class="hidden bg-white rounded-xl p-6 border border-[#D6D2CC] space-y-2">
+            <p class="text-sm font-semibold text-[#1C1C1C] mb-3">Choose a common task or create your own:</p>
+            <div class="grid sm:grid-cols-2 gap-2">
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Email management & inbox triage">Email management & inbox triage</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Data entry & spreadsheet work">Data entry & spreadsheet work</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Social media scheduling & posting">Social media scheduling & posting</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Report generation & analysis">Report generation & analysis</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Customer follow-ups & reminders">Customer follow-ups & reminders</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="File organization & backups">File organization & backups</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Meeting notes & documentation">Meeting notes & documentation</button>
+              <button class="preset-btn text-left px-4 py-2 rounded-md bg-[#EDEAE6] hover:bg-[#D97706] hover:text-white transition-colors text-sm" data-task="Invoice processing & tracking">Invoice processing & tracking</button>
+            </div>
+            <div class="pt-3 border-t border-[#D6D2CC] mt-4">
+              <input
+                type="text"
+                id="customTaskInput"
+                placeholder="Or type your own task..."
+                class="w-full px-4 py-2 rounded-md border border-[#D6D2CC] text-sm focus:outline-none focus:ring-2 focus:ring-[#D97706]"
+              />
+              <button id="addCustomTaskBtn" class="mt-2 w-full bg-[#D97706] text-white font-semibold px-4 py-2 rounded-md hover:bg-[#B45309] transition-colors text-sm">Add Custom Task</button>
+            </div>
+          </div>
+
+          <!-- Results Panel -->
+          <div id="resultsPanel" class="hidden bg-gradient-to-br from-[#D97706] to-[#B45309] rounded-xl p-8 text-white">
+            <div class="grid sm:grid-cols-2 gap-6 mb-6">
+              <div>
+                <p class="text-sm opacity-90 mb-1">Total time spent weekly</p>
+                <p class="text-4xl font-bold" id="totalHours">0</p>
+                <p class="text-sm opacity-75 mt-1" id="weekEquivalent">—</p>
+              </div>
+              <div>
+                <p class="text-sm opacity-90 mb-1">Annual cost at current rate</p>
+                <p class="text-4xl font-bold" id="annualCost">$0</p>
+              </div>
+            </div>
+
+            <div class="border-t border-white/20 pt-6">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-sm opacity-90">Potential savings with automation</p>
+                <span class="text-xs opacity-75 bg-white/10 px-2 py-1 rounded">~70% time reduction</span>
+              </div>
+              <p class="text-xs opacity-75 mb-3">Most automations save 60-80% of manual work. You'll still need some oversight, but the heavy lifting is handled.</p>
+              <div class="flex items-center gap-3 mb-2">
+                <label for="timeHorizon" class="text-sm font-semibold">Over</label>
+                <select id="timeHorizon" class="bg-white/20 border border-white/30 rounded-md px-3 py-1 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-white/50">
+                  <option value="1">1 year</option>
+                  <option value="3" selected>3 years</option>
+                  <option value="5">5 years</option>
+                </select>
+              </div>
+              <p class="text-5xl font-bold mb-2" id="totalSavings">$0</p>
+              <p class="text-sm opacity-75" id="timeSaved">Plus X hours back</p>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-white/20">
+              <p class="text-sm opacity-90 mb-3">That's enough to:</p>
+              <div id="insights" class="space-y-2 text-sm">
+                <!-- Dynamic insights will be inserted here -->
+              </div>
+            </div>
+
+            <a
+              href="#contact"
+              class="mt-6 block w-full bg-white text-[#D97706] font-bold px-6 py-3 rounded-md hover:bg-[#F7F5F2] transition-colors text-center"
+            >
+              Let's automate one of these →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ── CASE STUDIES ── -->
     <section id="work" class="bg-[#EDEAE6] border-t border-[#D6D2CC]">
       <div class="max-w-3xl mx-auto px-6 py-16">
@@ -263,4 +376,180 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div>
   </footer>
+
+  <script>
+    // ROI Calculator Logic
+    let tasks = [];
+    let taskIdCounter = 0;
+
+    const hourlyRateInput = document.getElementById('hourlyRate');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskPresets = document.getElementById('taskPresets');
+    const taskList = document.getElementById('taskList');
+    const resultsPanel = document.getElementById('resultsPanel');
+    const customTaskInput = document.getElementById('customTaskInput');
+    const addCustomTaskBtn = document.getElementById('addCustomTaskBtn');
+    const timeHorizonSelect = document.getElementById('timeHorizon');
+
+    // Toggle task presets visibility
+    addTaskBtn.addEventListener('click', () => {
+      taskPresets.classList.toggle('hidden');
+    });
+
+    // Add preset task
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        addTask(btn.dataset.task);
+        taskPresets.classList.add('hidden');
+      });
+    });
+
+    // Add custom task
+    addCustomTaskBtn.addEventListener('click', () => {
+      const taskName = customTaskInput.value.trim();
+      if (taskName) {
+        addTask(taskName);
+        customTaskInput.value = '';
+        taskPresets.classList.add('hidden');
+      }
+    });
+
+    // Add task on Enter key
+    customTaskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addCustomTaskBtn.click();
+      }
+    });
+
+    function addTask(name) {
+      const taskId = taskIdCounter++;
+      tasks.push({ id: taskId, name, hours: 2 });
+
+      const taskCard = document.createElement('div');
+      taskCard.className = 'bg-white rounded-xl p-5 border border-[#D6D2CC] flex flex-col sm:flex-row sm:items-center gap-4 fade-up';
+      taskCard.style.animationDelay = '0ms';
+      taskCard.dataset.taskId = taskId;
+
+      taskCard.innerHTML = `
+        <div class="flex-1">
+          <p class="font-semibold text-[#1C1C1C] mb-2">${name}</p>
+          <div class="flex items-center gap-3">
+            <input
+              type="number"
+              value="2"
+              min="0.5"
+              max="40"
+              step="0.5"
+              class="task-hours w-20 px-3 py-1 border border-[#D6D2CC] rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#D97706]"
+              data-task-id="${taskId}"
+            />
+            <span class="text-sm text-[#6B7280]">hours per week</span>
+          </div>
+        </div>
+        <button class="remove-task text-[#6B7280] hover:text-red-600 transition-colors self-start sm:self-center" data-task-id="${taskId}">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      `;
+
+      taskList.appendChild(taskCard);
+
+      // Add event listeners
+      taskCard.querySelector('.task-hours').addEventListener('input', (e) => {
+        updateTaskHours(taskId, parseFloat(e.target.value) || 0);
+      });
+
+      taskCard.querySelector('.remove-task').addEventListener('click', () => {
+        removeTask(taskId);
+      });
+
+      calculate();
+    }
+
+    function updateTaskHours(taskId, hours) {
+      const task = tasks.find(t => t.id === taskId);
+      if (task) {
+        task.hours = hours;
+        calculate();
+      }
+    }
+
+    function removeTask(taskId) {
+      tasks = tasks.filter(t => t.id !== taskId);
+      const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+      if (taskCard && taskCard.classList.contains('bg-white')) {
+        taskCard.style.opacity = '0';
+        taskCard.style.transform = 'translateX(-20px)';
+        setTimeout(() => taskCard.remove(), 200);
+      }
+      calculate();
+    }
+
+    function calculate() {
+      if (tasks.length === 0) {
+        resultsPanel.classList.add('hidden');
+        return;
+      }
+
+      resultsPanel.classList.remove('hidden');
+
+      const hourlyRate = parseFloat(hourlyRateInput.value) || 0;
+      const totalHoursPerWeek = tasks.reduce((sum, task) => sum + task.hours, 0);
+      const hoursPerYear = totalHoursPerWeek * 52;
+      const annualCost = hoursPerYear * hourlyRate;
+      
+      // Assume 70% time savings with automation (conservative estimate)
+      const automationEfficiency = 0.70;
+      const hoursSavedPerYear = hoursPerYear * automationEfficiency;
+      const annualSavings = annualCost * automationEfficiency;
+      
+      const timeHorizon = parseInt(timeHorizonSelect.value) || 3;
+      const totalSavings = annualSavings * timeHorizon;
+      const totalHoursSaved = hoursSavedPerYear * timeHorizon;
+
+      // Update display
+      document.getElementById('totalHours').textContent = totalHoursPerWeek.toFixed(1) + ' hrs';
+      
+      const weeksEquivalent = (totalHoursPerWeek / 40).toFixed(1);
+      document.getElementById('weekEquivalent').textContent = weeksEquivalent > 0.1 
+        ? `${(weeksEquivalent * 100).toFixed(0)}% of a full-time job` 
+        : '';
+
+      document.getElementById('annualCost').textContent = '$' + annualCost.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('totalSavings').textContent = '$' + totalSavings.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      document.getElementById('timeSaved').textContent = `Plus ${Math.round(totalHoursSaved).toLocaleString()} hours back`;
+
+      // Generate insights
+      const insights = [];
+      const weeksOfWork = Math.floor(totalHoursSaved / 40);
+      if (weeksOfWork >= 1) {
+        insights.push(`✓ Free up ${weeksOfWork} full work week${weeksOfWork > 1 ? 's' : ''} worth of time`);
+      }
+      
+      const monthlyProjectEquiv = Math.floor(totalHoursSaved / 160);
+      if (monthlyProjectEquiv >= 1) {
+        insights.push(`✓ Take on ${monthlyProjectEquiv} additional month-long project${monthlyProjectEquiv > 1 ? 's' : ''}`);
+      }
+      
+      if (totalSavings >= 10000) {
+        insights.push(`✓ Reinvest $${Math.round(totalSavings / 1000)}k into growth initiatives`);
+      }
+
+      insights.push(`✓ Eliminate ${Math.round(hoursSavedPerYear)} hours/year of repetitive work`);
+
+      document.getElementById('insights').innerHTML = insights.map(i => 
+        `<p class="flex items-start gap-2"><span class="opacity-75">${i}</span></p>`
+      ).join('');
+    }
+
+    // Recalculate on hourly rate or time horizon change
+    hourlyRateInput.addEventListener('input', calculate);
+    timeHorizonSelect.addEventListener('change', calculate);
+
+    // Initialize with one example task
+    setTimeout(() => {
+      addTask('Email management & inbox triage');
+    }, 500);
+  </script>
 </Layout>
