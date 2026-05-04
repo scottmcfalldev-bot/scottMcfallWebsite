@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Scott McFall — AI Developer for Creators & Founders",
-  description = "I build AI-powered tools, automations, and landing pages for creators and founders. Let's turn your idea into a working product.",
+  title = "Scott McFall — Workflow & Growth Consultant for Small Teams",
+  description = "I connect your tools, automate the busywork, and build landing pages that capture leads. Integrations, automation, and funnels for small teams.",
   ogImage = "/profile.svg",
 } = Astro.props;
 
@@ -18,11 +18,17 @@ const ogImageURL = new URL(ogImage, Astro.site).toString();
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
+  "@type": "ProfessionalService",
   name: "Scott McFall",
   url: "https://scottmcfall.com",
-  jobTitle: "AI Developer",
   description,
+  founder: {
+    "@type": "Person",
+    name: "Scott McFall",
+    jobTitle: "Workflow & Growth Consultant",
+  },
+  serviceType: ["Workflow Automation", "Business Integrations", "Landing Page Development", "Lead Funnel Optimization"],
+  areaServed: "US",
   sameAs: [
     "https://github.com/scottmcfalldev-bot",
   ],
@@ -41,7 +47,7 @@ const jsonLd = {
     <meta name="author" content="Scott McFall" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
-    <meta name="theme-color" content="#D97706" />
+    <meta name="theme-color" content="#4A6741" />
 
     <!-- Open Graph -->
     <meta property="og:site_name" content="Scott McFall" />
@@ -51,14 +57,14 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:alt" content="Scott McFall — AI Developer for Creators & Founders" />
+    <meta property="og:image:alt" content="Scott McFall — Workflow & Growth Consultant for Small Teams" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
-    <meta name="twitter:image:alt" content="Scott McFall — AI Developer for Creators & Founders" />
+    <meta name="twitter:image:alt" content="Scott McFall — Workflow & Growth Consultant for Small Teams" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -66,13 +72,6 @@ const jsonLd = {
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <slot />
