@@ -21,6 +21,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  font-variant-ligatures: no-common-ligatures;
 }
 
 /* ── Hero fade-up on load ── */
