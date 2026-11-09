@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# scroll-craft test harness output
+scrollcraft/lab/

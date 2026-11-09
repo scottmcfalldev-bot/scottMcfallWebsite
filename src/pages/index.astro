@@ -41,376 +41,301 @@ const faqSchema = {
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
+
+// What each common task becomes once it runs on its own.
+const runsAs: Record<string, string> = {
+  "Status updates across tools": "One update, posted to Asana, Slack and the client thread at once.",
+  "Weekly client reports": "Numbers pulled and the report sent every Friday at 9.",
+  "New client onboarding setup": "Signed proposal in. Folders, channels and the kickoff invite out.",
+  "Timesheets → invoices": "Hours roll into a draft invoice at month end, ready to check.",
+  "Building proposals": "A clean first draft from the call notes and your last good proposal.",
+  "Meeting notes → tasks": "Action items land in the right project, each with an owner.",
+  "Lead follow-up & CRM updates": "Every form fill gets a reply and a CRM record within minutes.",
+  "Copying data between tools": "The two tools stay in sync on their own, both directions.",
+};
+const runsDefault = "Runs on its own, with an alert if it ever fails.";
+
+const defaultTasks = [
+  "Status updates across tools",
+  "Weekly client reports",
+  "New client onboarding setup",
+  "Timesheets → invoices",
+  "Building proposals",
+  "Lead follow-up & CRM updates",
+];
+const presets = [
+  "Status updates across tools",
+  "Weekly client reports",
+  "New client onboarding setup",
+  "Timesheets → invoices",
+  "Building proposals",
+  "Meeting notes → tasks",
+  "Lead follow-up & CRM updates",
+  "Copying data between tools",
+];
+
+const work = [
+  {
+    kind: "Operations overhaul · consulting firm",
+    title: "Formation Consulting",
+    before: "Monday.com for projects, Harvest for hours, spreadsheets for budgets, and invoices built by hand.",
+    tag: "~15 hrs/week saved, ~$21k/year (estimated)",
+    after: "One integrated system now tracks project financials, sub-contractor budgets and workflows from pipeline through closeout, with no re-entry.",
+  },
+  {
+    kind: "Workflow automation",
+    title: "School of Greatness",
+    before: "Every episode walked by hand from the recording to publish-ready files.",
+    tag: "Faster turnaround, zero added headcount",
+    after: "The manual steps between recording and publish run on their own for Lewis Howes' weekly show, so the team keeps pace without growing.",
+  },
+  {
+    kind: "Lead capture",
+    title: "JJ Virgin · protein calculator",
+    before: "Visitors with a protein question and no reason to leave an email.",
+    tag: "Email list growth on autopilot",
+    after: "An interactive calculator gives each visitor a personal protein number and captures the email that comes with it.",
+  },
+  {
+    kind: "Custom app",
+    title: "Live auction · school fundraiser",
+    before: "A clipboard and a spreadsheet on event night.",
+    tag: "Replaced clipboard + spreadsheet",
+    after: "A real-time bidding app handles every bidder at once, built in days.",
+  },
+  {
+    kind: "Batch automation",
+    title: "MP3 metadata processor",
+    before: "Hours of tagging audio files one at a time.",
+    tag: "Hours → minutes",
+    after: "A custom rules engine tags whole audio libraries with consistent metadata in minutes.",
+  },
+];
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/scrollcraft/scrollcraft.css" />
+  </Fragment>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <!-- ── NAV ── -->
-  <header class="sticky top-0 z-50 bg-[#FAFAF9]/85 backdrop-blur-[16px] border-b border-[#E7E5E4]">
-    <div class="max-w-[1000px] mx-auto px-7 py-3.5 flex items-center justify-between">
-      <span class="font-[800] text-[17px] tracking-[-0.5px] text-[#1C1917]">Scott McFall</span>
-      <nav aria-label="Main navigation" class="hidden sm:flex items-center gap-8">
-        <a href="#problems" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Problems</a>
-        <a href="#offer" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Pricing</a>
-        <a href="#work" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Work</a>
-        <a href="#faq" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">FAQ</a>
-      </nav>
-      <a
-        href="#contact"
-        class="text-[13px] font-semibold bg-[#1C1917] text-[#FAFAF9] px-5 py-2.5 rounded-md hover:bg-[#44403C] transition-all tracking-[0.2px] whitespace-nowrap"
-      >
-        Book a Free Call
-      </a>
+
+  <!-- The divider is the chrome: both labels, the booking link, and the running hours. -->
+  <div class="divider" id="divider" data-sc-verify-state="50|1">
+    <span class="divider__line" aria-hidden="true"></span>
+    <div class="divider__top">
+      <p class="divider__labels" aria-hidden="true"><span>By hand</span><span>Automated</span></p>
+      <a class="btn btn--accent btn--sm divider__cta" href="#book">Book a free bottleneck call</a>
     </div>
-  </header>
+    <p class="divider__readout" aria-hidden="true">
+      <strong id="readoutHours">12</strong> hrs/week by hand
+      <span id="readoutSource">· examples</span>
+    </p>
+  </div>
+  <div class="sc-grain" aria-hidden="true"></div>
 
   <main>
-    <!-- ── HERO ── -->
-    <section class="max-w-[1000px] mx-auto px-7 pt-[100px] pb-20">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12">
-        <!-- Left: copy -->
-        <div class="lg:max-w-[540px]">
-          <p class="fade-up text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-6" style="animation-delay: 0ms">For agencies &amp; consulting firms, 5–30 people</p>
-          <h1 class="fade-up text-[clamp(34px,5vw,54px)] font-[900] leading-[1.05] tracking-[-2px] text-[#1C1917] mb-6" style="animation-delay: 80ms">
-            Your team types the same update into five tools.<br><span class="text-[#4A6741]">I automate that.</span>
-          </h1>
-          <p class="fade-up text-[17px] text-[#78716C] mb-9 max-w-[480px] leading-[1.65]" style="animation-delay: 160ms">
-            Status updates, client onboarding, weekly reports, timesheets to invoices. Book a free 30-minute call. Within 48 hours you get a one-page plan for the first workflow to automate, with a fixed price.
-          </p>
-          <div class="fade-up flex gap-3 flex-wrap" style="animation-delay: 240ms">
-            <a href="#contact" class="inline-block bg-[#1C1917] text-[#FAFAF9] font-semibold px-6 py-2.5 rounded-md hover:bg-[#44403C] transition-all text-[13px] tracking-[0.2px]">
-              Book a free bottleneck call
-            </a>
-            <a href="#offer" class="inline-block bg-transparent text-[#1C1917] font-semibold px-6 py-2.5 rounded-md border-[1.5px] border-[#D6D3D1] hover:border-[#1C1917] transition-all text-[13px] tracking-[0.2px]">
-              See what it costs
-            </a>
+    <!-- 1 · RECOGNITION: the split, both headlines at once -->
+    <section class="act-hero" data-sc-act="pin" data-sc-span="1.6">
+      <div data-sc-stage class="stage">
+        <div class="side side--manual">
+          <div class="plane plane--ruling" aria-hidden="true"></div>
+          <p class="wordmark">Scott McFall</p>
+          <div class="hero-slips" aria-hidden="true">
+            <span class="slip slip--loose" style="--x: 8%; --y: 66%; --r: -4deg; --k: 1">Copy status → Slack</span>
+            <span class="slip slip--loose" style="--x: 40%; --y: 74%; --r: 3deg; --k: 1.35">Client B report, again</span>
+            <span class="slip slip--loose" style="--x: 14%; --y: 83%; --r: 2deg; --k: 1.7">Chase timesheets</span>
+            <span class="slip slip--loose" style="--x: 52%; --y: 88%; --r: -2deg; --k: 1.2">New client folders</span>
           </div>
         </div>
+        <div class="side side--auto">
+          <div class="plane plane--schedule" aria-hidden="true"></div>
+          <ul class="hero-runs" aria-hidden="true">
+            <li style="--k: 0">Mon 07:00 · status posted to 3 tools</li>
+            <li style="--k: 1">Fri 09:00 · Client B report sent</li>
+            <li style="--k: 2">Daily · timesheets matched to budget</li>
+          </ul>
+        </div>
 
-        <!-- Right: savings proof card -->
-        <div class="fade-up lg:max-w-[340px] w-full" style="animation-delay: 300ms">
-          <div class="bg-[#F5F5F4] border border-[#E7E5E4] rounded-2xl p-7 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-[3px] bg-[#4A6741]"></div>
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-4">Client result · consulting firm</p>
-            <p class="text-[40px] font-[900] tracking-[-1.5px] text-[#1C1917] leading-none mb-1">$21k+</p>
-            <p class="text-[14px] text-[#78716C] mb-5">estimated savings per year</p>
-            <div class="space-y-3 pt-4 border-t border-[#E7E5E4]">
-              <div class="flex items-baseline justify-between">
-                <span class="text-[13px] text-[#57534E]">Hours reclaimed weekly</span>
-                <span class="text-[15px] font-[800] text-[#1C1917]">15+</span>
+        <h1 class="hero-title">
+          <span class="hero-title__a" data-sc-cue="0 0.97 0 0.2">Your team types the same update into five tools.</span>
+          <span class="hero-title__b" data-sc-cue="0 0.97 0 0.2">I automate that.</span>
+        </h1>
+        <div class="hero-sub" data-sc-cue="0 0.97 0 0.2">
+          <p>For agencies and consulting firms with 5 to 30 people. One free call, then a one-page plan with a fixed price within 48 hours.</p>
+          <a class="btn btn--accent" href="#book">Book a free bottleneck call</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · UNEASE: their own tasks, priced -->
+    <section class="split-flow calc" id="calculator" data-sc-act="flow">
+      <div class="side side--manual">
+        <div class="col" data-sc-in data-sc-stagger="60">
+          <h2 class="h2">Add the tasks eating your team's week.</h2>
+          <p class="soft">Pick from the usual ones or type your own. Set the hours. Keep scrolling and you'll see them again.</p>
+
+          <div class="field">
+            <label for="hourlyRate">Hourly cost of the person doing it</label>
+            <div class="rate">
+              <span>$</span>
+              <input type="number" id="hourlyRate" value="50" min="10" max="500" step="5" inputmode="decimal" />
+              <span>/ hr</span>
+            </div>
+          </div>
+
+          <div>
+            <button id="addTaskBtn" class="btn btn--ghost" type="button" aria-expanded="false" aria-controls="taskPresets">+ Add a task</button>
+            <div id="taskPresets" class="presets" hidden>
+              <div class="presets__grid">
+                {presets.map((p) => (
+                  <button type="button" class="preset-btn" data-task={p}>{p}</button>
+                ))}
               </div>
-              <div class="flex items-baseline justify-between">
-                <span class="text-[13px] text-[#57534E]">Tools replaced</span>
-                <span class="text-[15px] font-[800] text-[#1C1917]">5 → 1</span>
-              </div>
-              <div class="flex items-baseline justify-between">
-                <span class="text-[13px] text-[#57534E]">Manual processes cut</span>
-                <span class="text-[15px] font-[800] text-[#1C1917]">80%</span>
+              <div class="presets__custom">
+                <label for="customTaskInput" class="sr-only">Your own task</label>
+                <input type="text" id="customTaskInput" placeholder="Or type your own..." />
+                <button id="addCustomTaskBtn" type="button" class="btn btn--ink btn--sm">Add</button>
               </div>
             </div>
-            <p class="text-[11px] text-[#A8A29E] mt-4 italic">Formation Consulting. Estimated from hours saved, not audited.</p>
+          </div>
+
+          <ul id="taskList" class="task-list" aria-label="Your tasks"></ul>
+        </div>
+      </div>
+
+      <div class="side side--auto">
+        <div class="col" data-sc-in data-sc-stagger="60">
+          <p class="label">What it costs</p>
+          <div id="resultsEmpty" class="soft">Add a task and the yearly cost shows up here.</div>
+          <div id="resultsPanel" class="results" hidden>
+            <dl class="figures">
+              <div>
+                <dt>Weekly time spent</dt>
+                <dd id="totalHours">0</dd>
+                <dd class="soft small" id="weekEquivalent"></dd>
+              </div>
+              <div>
+                <dt>Yearly cost</dt>
+                <dd id="annualCost">$0</dd>
+              </div>
+            </dl>
+            <div class="savings">
+              <p class="small soft">If about 70% of that runs on its own (my usual estimate; the call gives you a real one), over
+                <label for="timeHorizon" class="sr-only">Time horizon</label>
+                <select id="timeHorizon">
+                  <option value="1">1 year</option>
+                  <option value="3" selected>3 years</option>
+                  <option value="5">5 years</option>
+                </select>
+                you get back</p>
+              <p class="savings__total" id="totalSavings">$0</p>
+              <p class="soft" id="timeSaved">Plus 0 hours</p>
+              <ul id="insights" class="insights"></ul>
+            </div>
+            <a href="#book" id="calcCta" class="btn btn--accent btn--block">Book your free bottleneck call</a>
+            <p class="small soft">Your tasks and hours come with you, so we skip the basics on the call.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── TRUST BAR ── -->
-    <section class="border-t border-b border-[#E7E5E4] bg-[#F5F5F4] py-[18px]">
-      <div class="max-w-[1000px] mx-auto px-7 text-center">
-        <p class="text-[13px] text-[#A8A29E] font-medium">
-          Worked with <strong class="text-[#57534E] font-semibold">Lewis Howes</strong>,
-          <strong class="text-[#57534E] font-semibold">JJ Virgin</strong>,
-          and <strong class="text-[#57534E] font-semibold">Formation Consulting</strong>.
+    <!-- 3 · RELIEF (peak): the list crosses the line -->
+    <section class="act-cross" id="crossing" data-sc-act="pin" data-sc-span="3.2">
+      <div data-sc-stage class="stage" id="crossStage" data-sc-verify-state="">
+        <div class="side side--manual">
+          <p class="label cross-head" id="crossLabel">The usual six (examples)</p>
+        </div>
+        <div class="side side--auto">
+          <p class="label cross-head">Running on its own</p>
+        </div>
+        <ol class="cross-rows" id="crossRows">
+          {defaultTasks.map((t, i) => (
+            <li class="cross-row" style={`--i: ${i}`} data-hours="2">
+              <span class="slip"><span class="slip__name">{t}</span><span class="slip__hrs">2 hrs/wk</span></span>
+              <span class="run">{runsAs[t] ?? runsDefault}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="cross-you" data-sc-cue="0.8 0.995 0.06 0.08">
+          That's <strong id="crossBack">8.4</strong> hours a week back, at my usual 70% estimate. The call tells you the real number.
         </p>
       </div>
     </section>
 
-    <!-- ── PAIN POINTS ── -->
-    <section id="problems" class="bg-[#F0F4EE] border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Sound Familiar?</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">Where agency hours quietly go.</h2>
-        <p class="text-[15px] text-[#78716C] mb-12">None of this is billable. All of it can run on its own.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#D6D3D1] border border-[#D6D3D1] rounded-xl overflow-hidden">
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 0ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Status updates live in five places</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">The same project update goes into Asana, Slack, the client email and the spreadsheet. By hand. Every day.</p>
+    <!-- 4 · TRUST: before and after, for real -->
+    <section class="split-flow proof" id="work">
+      <div class="proof-head">
+        <div class="side side--manual">
+          <h2 class="h2 col">Five jobs that used to be done by hand.</h2>
+        </div>
+        <div class="side side--auto">
+          <h2 class="h2 col">Now they run on their own.</h2>
+        </div>
+      </div>
+      {work.map((w) => (
+        <article class="proof-row" data-sc-act="flow">
+          <div class="side side--manual">
+            <div class="col" data-sc-reveal="left" data-sc-reveal-at="0.18 0.5">
+              <p class="label">Before</p>
+              <p class="proof-before">{w.before}</p>
+            </div>
           </div>
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 80ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Client reports eat Friday</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Someone pulls numbers from three tools, pastes them into a deck, and sends it. Every client, every week.</p>
+          <div class="side side--auto">
+            <div class="col" data-sc-reveal="right" data-sc-reveal-at="0.26 0.58">
+              <p class="label">{w.kind}</p>
+              <h3 class="h3">{w.title}</h3>
+              <p class="tag">{w.tag}</p>
+              <p class="soft">{w.after}</p>
+            </div>
           </div>
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 160ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Onboarding is a checklist in someone's head</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">New client signs. Folders, channels, intake forms and kickoff invites get set up from memory, and something gets missed.</p>
-          </div>
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 240ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Timesheets don't match invoices</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Hours live in Harvest, budgets in a spreadsheet, invoices in QuickBooks. Month-end is a reconciliation project.</p>
-          </div>
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 320ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Proposals start from a blank page</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Every proposal is rebuilt from the last one, with old client names left in. Hours per deal you never bill for.</p>
-          </div>
-          <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 400ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Leads go quiet after the form</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Someone fills out your contact form and then nothing happens until a person remembers to reply.</p>
+        </article>
+      ))}
+    </section>
+
+    <!-- 5 · RESOLVE: the paper side folds away -->
+    <section class="act-fold" id="offer" data-sc-act="pin" data-sc-span="1.7">
+      <div data-sc-stage class="stage">
+        <div class="side side--manual fold-paper">
+          <p class="fold-left">Or keep doing it by hand.</p>
+        </div>
+        <div class="offer">
+          <h2 class="h2" data-sc-cue="0.32" data-sc-kinetic="lines">One call. One workflow. One fixed price.</h2>
+          <ol class="ledger" data-sc-cue="0.42">
+            <li><span class="ledger__name">Bottleneck call</span><span class="ledger__what">30 minutes on your week. A one-page plan and a fixed price within 48 hours.</span><span class="ledger__price">Free</span></li>
+            <li><span class="ledger__name">First automation</span><span class="ledger__what">One workflow built, tested and handed over in about two weeks. 50% to start. Failure alerts and 30 days of fixes included.</span><span class="ledger__price">$2,500</span></li>
+            <li><span class="ledger__name">Keep it running</span><span class="ledger__what">Monitoring, fixes within one business day, small tweaks, one small new automation a month. Optional, cancel any time.</span><span class="ledger__price">$750/mo</span></li>
+          </ol>
+          <div class="offer__foot" data-sc-cue="0.5">
+            <p class="soft"><strong>Founding clients, 3 spots:</strong> your first automation for $1,500, in return for a short case study with your real numbers.</p>
+            <a class="btn btn--accent" href="#book">Book a free bottleneck call</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── OFFER ── -->
-    <section id="offer" class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">How to Start</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">One call. One workflow. One fixed price.</h2>
-        <p class="text-[15px] text-[#78716C] mb-12">Start small, see it work, then decide if you want more.</p>
-        <div class="grid sm:grid-cols-3 gap-5">
-          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border-2 border-[#4A6741] relative flex flex-col">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 1</p>
-            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">Bottleneck Call</h3>
-            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">Free</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed mb-5">30 minutes walking through your team's week. Within 48 hours you get a one-page plan: the first workflow to automate, the hours it saves, and a fixed price.</p>
-            <a href="#contact" class="mt-auto block text-center bg-[#1C1917] text-[#FAFAF9] font-semibold px-5 py-2.5 rounded-md hover:bg-[#44403C] transition-colors text-[13px]">Book the call</a>
-          </div>
-          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border border-[#E7E5E4] flex flex-col" style="animation-delay: 80ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 2</p>
-            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">First Automation</h3>
-            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">$2,500</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">One workflow built, tested and handed over in about two weeks. Fixed scope, 50% to start. Failure alerts and 30 days of fixes included.</p>
-          </div>
-          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border border-[#E7E5E4] flex flex-col" style="animation-delay: 160ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 3 · optional</p>
-            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">Keep It Running</h3>
-            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">$750<span class="text-[15px] font-semibold text-[#78716C]">/mo</span></p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Monitoring, fixes within one business day, small tweaks, and one small new automation each month. Cancel any time.</p>
-          </div>
-        </div>
-        <div class="scroll-fade mt-6 rounded-xl bg-[#F0F4EE] border border-[#D6D3D1] p-6 sm:flex sm:items-center sm:justify-between gap-6">
-          <div>
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-1">Founding clients · 3 spots</p>
-            <p class="text-[15px] text-[#1C1917] font-semibold mb-1">Your first automation for $1,500 instead of $2,500.</p>
-            <p class="text-[13px] text-[#78716C]">In return: a short written case study with your real before-and-after numbers, and permission to name your firm.</p>
-          </div>
-          <a href="#contact" class="mt-4 sm:mt-0 inline-block shrink-0 bg-[#4A6741] text-white font-semibold px-5 py-2.5 rounded-md hover:bg-[#3A5233] transition-colors text-[13px]">Ask about a spot</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── ROI CALCULATOR ── -->
-    <section class="border-b border-[#E7E5E4] bg-[#1C1917] text-[#FAFAF9]">
-      <div class="max-w-[1000px] mx-auto px-7 py-20">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Calculator</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#FAFAF9] mb-2">What's the busywork costing you?</h2>
-        <p class="text-[15px] text-[#A8A29E] mb-9">Add the tasks eating your time. See the real number.</p>
-
-        <div class="grid sm:grid-cols-2 gap-4 mb-5">
-          <div class="bg-[#292524] rounded-[10px] p-6 border border-[#44403C]">
-            <label for="hourlyRate" class="block text-[13px] font-semibold text-[#D6D3D1] mb-2.5">Hourly rate (yours or your team member's)</label>
-            <div class="flex items-center gap-2">
-              <span class="text-[18px] text-[#A8A29E]">$</span>
-              <input
-                type="number"
-                id="hourlyRate"
-                value="50"
-                min="10"
-                max="500"
-                step="5"
-                class="text-[28px] font-[800] text-[#FAFAF9] bg-transparent border-0 border-b-2 border-[#4A6741] focus:outline-none w-[90px] font-sans"
-              />
-              <span class="text-[18px] text-[#A8A29E]">/ hr</span>
-            </div>
-          </div>
-          <button
-            id="addTaskBtn"
-            class="bg-[#292524] border border-[#44403C] text-[#D6D3D1] font-semibold text-[15px] rounded-[10px] p-6 hover:bg-[#44403C] hover:text-[#FAFAF9] transition-all cursor-pointer"
-          >
-            + Add a Task
-          </button>
+    <!-- 6 · CALM: booking and short answers on the winning ground -->
+    <section class="book" id="book" data-sc-act="flow">
+      <div class="wrap">
+        <div class="book__head" data-sc-in data-sc-stagger="60">
+          <h2 class="h2">Pick a time, or tell me what's broken.</h2>
+          <p class="soft">30 minutes, no pitch deck. You leave with a one-page plan and a fixed price within 48 hours.</p>
         </div>
 
-        <!-- Task Presets -->
-        <div id="taskPresets" class="hidden bg-[#292524] border border-[#44403C] rounded-[10px] p-6 mb-5">
-          <p class="text-[13px] font-semibold text-[#D6D3D1] mb-3">Pick a common task or add your own:</p>
-          <div class="grid sm:grid-cols-2 gap-2">
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Status updates across tools">Status updates across tools</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Weekly client reports">Weekly client reports</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="New client onboarding setup">New client onboarding setup</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Timesheets → invoices">Timesheets → invoices</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Building proposals">Building proposals</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Meeting notes → tasks">Meeting notes → tasks</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Lead follow-up & CRM updates">Lead follow-up &amp; CRM updates</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Copying data between tools">Copying data between tools</button>
-          </div>
-          <div class="mt-3.5 pt-3.5 border-t border-[#44403C]">
-            <input
-              type="text"
-              id="customTaskInput"
-              placeholder="Or type your own..."
-              class="w-full px-3 py-2.5 rounded-md border border-[#44403C] bg-[#292524] text-[13px] text-[#FAFAF9] placeholder-[#78716C] focus:outline-none focus:border-[#4A6741] mb-2"
-            />
-            <button id="addCustomTaskBtn" class="w-full py-2.5 rounded-md bg-[#4A6741] text-white font-semibold text-[13px] hover:bg-[#3A5233] transition-colors cursor-pointer">Add Custom Task</button>
-          </div>
-        </div>
-
-        <!-- Task List -->
-        <div id="taskList" class="space-y-2.5 mb-5"></div>
-
-        <!-- Results Panel -->
-        <div id="resultsPanel" class="hidden bg-[#292524] border border-[#44403C] rounded-xl p-7">
-          <div class="grid sm:grid-cols-2 gap-5 mb-5">
-            <div>
-              <p class="text-[12px] text-[#A8A29E] mb-1 uppercase tracking-[1px] font-semibold">Weekly time spent</p>
-              <p class="text-[32px] font-[800] text-[#FAFAF9]" id="totalHours">0</p>
-              <p class="text-[12px] text-[#78716C] mt-0.5" id="weekEquivalent"></p>
-            </div>
-            <div>
-              <p class="text-[12px] text-[#A8A29E] mb-1 uppercase tracking-[1px] font-semibold">Annual cost</p>
-              <p class="text-[32px] font-[800] text-[#FAFAF9]" id="annualCost">$0</p>
-            </div>
-          </div>
-
-          <div class="border-t border-[#44403C] pt-5">
-            <div class="flex items-center justify-between mb-1.5">
-              <p class="text-[12px] text-[#A8A29E] uppercase tracking-[1px] font-semibold">Potential savings</p>
-              <span class="text-[11px] font-bold bg-[#4A6741] text-white px-2.5 py-0.5 rounded-[10px]">~70% time reduction</span>
-            </div>
-            <p class="text-[12px] text-[#78716C] mb-3">Most automations save 60–80%. You still review — the heavy lifting is handled.</p>
-            <div class="flex items-center gap-2 mb-3">
-              <label for="timeHorizon" class="text-[13px] font-semibold text-[#E7E5E4]">Over</label>
-              <select id="timeHorizon" class="bg-[#44403C] border border-[#57534E] rounded px-2.5 py-1 text-[13px] font-semibold text-[#F5F5F4] focus:outline-none">
-                <option value="1">1 year</option>
-                <option value="3" selected>3 years</option>
-                <option value="5">5 years</option>
-              </select>
-            </div>
-            <p class="text-[40px] font-[900] text-[#4A6741] mb-1 tracking-[-1px]" id="totalSavings">$0</p>
-            <p class="text-[13px] text-[#A8A29E]" id="timeSaved">Plus 0 hours back</p>
-          </div>
-
-          <div class="mt-4 pt-4 border-t border-[#44403C]">
-            <p class="text-[12px] text-[#A8A29E] mb-2 uppercase tracking-[1px] font-semibold">That's enough to:</p>
-            <div id="insights" class="space-y-1"></div>
-          </div>
-
-          <a
-            href="#contact"
-            id="calcCta"
-            class="mt-5 block w-full bg-[#4A6741] text-white font-semibold px-6 py-3.5 rounded-md hover:bg-[#3A5233] transition-colors text-center text-[13px]"
-          >
-            Book your free bottleneck call →
-          </a>
-          <p class="text-[12px] text-[#78716C] mt-2 text-center">Your tasks and hours come with you, so we skip the basics on the call.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── WORK ── -->
-    <section id="work" class="border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Recent Work</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-12">Things I've built for real teams.</h2>
-
-        <div class="grid sm:grid-cols-2 gap-5">
-          <!-- Featured: Formation -->
-          <div class="scroll-fade sm:col-span-2 border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Operations Overhaul · Consulting Firm</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Five tools into one system — Formation Consulting</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">~15 hrs/week saved, ~$21k/year (estimated)</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Replaced Monday.com, Harvest, budget spreadsheets and manual invoicing with a single integrated system. Project financials, sub-contractor budgets and workflows now run from pipeline through closeout without re-entry.</p>
-          </div>
-
-          <!-- Lewis Howes -->
-          <div class="scroll-fade border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all" style="animation-delay: 80ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Workflow Automation</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Post-Production Automation — School of Greatness</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Faster turnaround, zero added headcount</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Automates the manual steps between recording and publish-ready files for Lewis Howes' top global podcast. Keeps pace with weekly publishing without growing the team.</p>
-          </div>
-
-          <!-- JJ Virgin -->
-          <div class="scroll-fade border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all" style="animation-delay: 160ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Lead Capture</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Protein Calculator — JJ Virgin</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Email list growth on autopilot</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Interactive calculator that gives personalized protein recommendations. Captures emails as a lead magnet while delivering real value.</p>
-          </div>
-
-          <!-- Auction -->
-          <div class="scroll-fade border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all" style="animation-delay: 240ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Custom App</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Live Auction — School Fundraiser</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Replaced clipboard + spreadsheet</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Real-time bidding app that handles concurrent bidders on event night. Ships in days, not weeks, and replaces an entirely manual process.</p>
-          </div>
-
-          <!-- MP3 -->
-          <div class="scroll-fade border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all" style="animation-delay: 320ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Batch Automation</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">MP3 Metadata Processor</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Hours → minutes</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Auto-tags large audio libraries with consistent metadata using a custom rules engine. Runs in minutes what used to take hours of manual file editing.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── PROCESS ── -->
-    <section class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">How It Works</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-12">Three steps. No surprises.</h2>
-
-        <div class="grid sm:grid-cols-3 gap-10">
-          <div class="scroll-fade">
-            <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">1</div>
-            <h3 class="text-[16px] font-bold mb-1.5">Free bottleneck call</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">30 minutes on where your team's week goes. If I can't help, I'll say so on the call.</p>
-          </div>
-          <div class="scroll-fade" style="animation-delay: 100ms">
-            <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">2</div>
-            <h3 class="text-[16px] font-bold mb-1.5">One-page plan, fixed price</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Within 48 hours: the workflow to fix first, the hours it saves, the price. Say yes and it's live in about two weeks.</p>
-          </div>
-          <div class="scroll-fade" style="animation-delay: 200ms">
-            <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">3</div>
-            <h3 class="text-[16px] font-bold mb-1.5">You own it</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">It runs in your accounts, with alerts if anything fails. Keep me on to maintain it, or don't. No lock-in.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CONTACT ── -->
-    <section id="contact" class="border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Free Bottleneck Call</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">Pick a time, or tell me what's broken.</h2>
-        <p class="text-[15px] text-[#78716C] mb-10">30 minutes, no pitch deck. You leave with a one-page plan and a fixed price within 48 hours.</p>
-
-        <div class="grid sm:grid-cols-2 gap-8">
-          <form
-            action="https://formspree.io/f/xwvnnpoy"
-            method="POST"
-            class="space-y-3.5"
-          >
-            <div class="grid sm:grid-cols-2 gap-3.5">
+        <div class="book__grid">
+          <form action="https://formspree.io/f/xwvnnpoy" method="POST" class="form">
+            <div class="form__pair">
               <div>
-                <label for="name" class="block text-[13px] font-semibold text-[#44403C] mb-1.5">Name</label>
-                <input id="name" type="text" name="name" required placeholder="Jane Smith"
-                  class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12" />
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name" />
               </div>
               <div>
-                <label for="email" class="block text-[13px] font-semibold text-[#44403C] mb-1.5">Email</label>
-                <input id="email" type="email" name="email" required placeholder="jane@company.com"
-                  class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12" />
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" required placeholder="jane@company.com" autocomplete="email" />
               </div>
             </div>
             <div>
-              <label for="problem" class="block text-[13px] font-semibold text-[#44403C] mb-1.5">Biggest time-waster right now?</label>
-              <select id="problem" name="problem"
-                class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12">
+              <label for="problem">Biggest time-waster right now?</label>
+              <select id="problem" name="problem">
                 <option value="" disabled selected>Pick one...</option>
                 <option>Status updates across tools</option>
                 <option>Client reporting</option>
@@ -422,221 +347,632 @@ const faqSchema = {
               </select>
             </div>
             <div>
-              <label for="details" class="block text-[13px] font-semibold text-[#44403C] mb-1.5">Anything else? (optional)</label>
-              <textarea id="details" name="details" rows="3" placeholder="How big is the team? Which tools? What's the most painful part?"
-                class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12 resize-none"></textarea>
+              <label for="details">Anything else? (optional)</label>
+              <textarea id="details" name="details" rows="4" placeholder="How big is the team? Which tools? What's the most painful part?"></textarea>
             </div>
-            <button type="submit" class="w-full bg-[#1C1917] text-[#FAFAF9] font-semibold px-6 py-3 rounded-md hover:bg-[#44403C] transition-colors text-[14px]">
-              Send Message →
-            </button>
+            <button type="submit" class="btn btn--accent btn--block">Send message</button>
           </form>
 
-          <!-- Calendly inline widget -->
-          <div class="calendly-inline-widget rounded-xl overflow-hidden"
-               data-url="https://calendly.com/scottmcfall/30min"
-               style="min-width:280px;height:700px;"></div>
-          <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <div class="calendly-inline-widget cal" data-url="https://calendly.com/scottmcfall/30min"></div>
         </div>
-      </div>
-    </section>
 
-    <!-- ── FAQ ── -->
-    <section id="faq" class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
-      <div class="max-w-[720px] mx-auto px-7">
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-9">FAQ</h2>
-
-        <div class="divide-y divide-[#E7E5E4] border-y border-[#E7E5E4]">
-          {faqs.map((f) => (
-            <div class="py-[18px]">
-              <h3 class="text-[14px] font-bold mb-1.5">{f.q}</h3>
-              <p class="text-[13px] text-[#78716C] leading-relaxed">{f.a}</p>
-            </div>
-          ))}
+        <div class="faq" id="faq">
+          <h2 class="h2">Short answers</h2>
+          <dl class="faq__list">
+            {faqs.map((f) => (
+              <div class="faq__item">
+                <dt>{f.q}</dt>
+                <dd>{f.a}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
+
+        <footer class="foot">
+          <p>&copy; 2026 Scott McFall · Workflow automation for small agencies</p>
+          <a href="https://github.com/scottmcfalldev-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </footer>
       </div>
     </section>
   </main>
 
-  <!-- ── FOOTER ── -->
-  <footer class="border-t border-[#E7E5E4]">
-    <div class="max-w-[1000px] mx-auto px-7 py-5 flex items-center justify-between">
-      <p class="text-[12px] text-[#A8A29E]">&copy; 2026 Scott McFall</p>
-      <a
-        href="https://github.com/scottmcfalldev-bot"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-[12px] text-[#A8A29E] hover:text-[#1C1917] transition-colors"
-      >
-        GitHub
-      </a>
-    </div>
-  </footer>
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+  <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script is:inline src="/scrollcraft/scrollcraft.js"></script>
+  <script is:inline>ScrollCraft.mount(document.body);</script>
+
+  <script define:vars={{ runsAs, runsDefault, defaultTasks }}>
+    window.__sm = { runsAs, runsDefault, defaultTasks };
+  </script>
 
   <script>
-    // ROI Calculator Logic
-    let tasks: { id: number; name: string; hours: number }[] = [];
-    let taskIdCounter = 0;
+    const { runsAs, runsDefault, defaultTasks } = (window as any).__sm as {
+      runsAs: Record<string, string>; runsDefault: string; defaultTasks: string[];
+    };
+    const REDUCTION = 0.7;
+    const CALENDLY_URL = 'https://calendly.com/scottmcfall/30min';
+    const $ = (id: string) => document.getElementById(id)!;
+    const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const ease = (t: number) => t * t * (3 - 2 * t);
+    const fmt = (n: number) => (Math.round(n * 10) / 10).toString();
 
-    const hourlyRateInput = document.getElementById('hourlyRate') as HTMLInputElement;
-    const addTaskBtn = document.getElementById('addTaskBtn')!;
-    const taskPresets = document.getElementById('taskPresets')!;
-    const taskList = document.getElementById('taskList')!;
-    const resultsPanel = document.getElementById('resultsPanel')!;
-    const customTaskInput = document.getElementById('customTaskInput') as HTMLInputElement;
-    const addCustomTaskBtn = document.getElementById('addCustomTaskBtn')!;
-    const timeHorizonSelect = document.getElementById('timeHorizon') as HTMLSelectElement;
+    // ── Calculator ─────────────────────────────────────────────
+    type Task = { id: number; name: string; hours: number };
+    let tasks: Task[] = [];
+    let nextId = 0;
 
-    addTaskBtn.addEventListener('click', () => {
-      taskPresets.classList.toggle('hidden');
+    const rateInput = $('hourlyRate') as HTMLInputElement;
+    const addBtn = $('addTaskBtn') as HTMLButtonElement;
+    const presetsBox = $('taskPresets');
+    const customInput = $('customTaskInput') as HTMLInputElement;
+    const list = $('taskList');
+    const horizon = $('timeHorizon') as HTMLSelectElement;
+
+    addBtn.addEventListener('click', () => {
+      const open = presetsBox.hidden;
+      presetsBox.hidden = !open;
+      addBtn.setAttribute('aria-expanded', String(open));
     });
-
-    document.querySelectorAll('.preset-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        addTask((btn as HTMLElement).dataset.task!);
-        taskPresets.classList.add('hidden');
-      });
+    document.querySelectorAll<HTMLButtonElement>('.preset-btn').forEach((b) =>
+      b.addEventListener('click', () => { addTask(b.dataset.task!); closePresets(); }));
+    $('addCustomTaskBtn').addEventListener('click', () => {
+      const v = customInput.value.trim();
+      if (v) { addTask(v); customInput.value = ''; closePresets(); }
     });
-
-    addCustomTaskBtn.addEventListener('click', () => {
-      const taskName = customTaskInput.value.trim();
-      if (taskName) {
-        addTask(taskName);
-        customTaskInput.value = '';
-        taskPresets.classList.add('hidden');
-      }
-    });
-
-    customTaskInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') addCustomTaskBtn.click();
-    });
+    customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('addCustomTaskBtn').click(); } });
+    function closePresets() { presetsBox.hidden = true; addBtn.setAttribute('aria-expanded', 'false'); addBtn.focus(); }
 
     function addTask(name: string) {
-      const taskId = taskIdCounter++;
-      tasks.push({ id: taskId, name, hours: 2 });
-
-      const taskCard = document.createElement('div');
-      taskCard.className = 'fade-up bg-[#292524] border border-[#44403C] rounded-[10px] px-5 py-[18px] flex items-center justify-between gap-4';
-      taskCard.style.animationDelay = '0ms';
-      taskCard.dataset.taskId = String(taskId);
-
-      taskCard.innerHTML = `
-        <div class="flex-1">
-          <p class="font-semibold text-[14px] text-[#F5F5F4] mb-1.5">${name}</p>
-          <div class="flex items-center gap-2">
-            <input type="number" value="2" min="0.5" max="40" step="0.5"
-              class="task-hours w-14 px-2 py-1 border border-[#57534E] rounded bg-[#44403C] text-[13px] text-[#F5F5F4] focus:outline-none focus:border-[#4A6741]"
-              data-task-id="${taskId}" />
-            <span class="text-[12px] text-[#A8A29E]">hrs/week</span>
-          </div>
-        </div>
-        <button class="remove-task text-[#78716C] hover:text-red-400 transition-colors text-[16px] cursor-pointer" data-task-id="${taskId}">✕</button>
-      `;
-
-      taskList.appendChild(taskCard);
-
-      taskCard.querySelector('.task-hours')!.addEventListener('input', (e) => {
-        updateTaskHours(taskId, parseFloat((e.target as HTMLInputElement).value) || 0);
-      });
-
-      taskCard.querySelector('.remove-task')!.addEventListener('click', () => {
-        removeTask(taskId);
-      });
-
-      calculate();
+      const t = { id: nextId++, name, hours: 2 };
+      tasks.push(t);
+      const li = document.createElement('li');
+      li.className = 'task';
+      const label = document.createElement('span');
+      label.className = 'task__name';
+      label.textContent = name;
+      const hrs = document.createElement('label');
+      hrs.className = 'task__hrs';
+      const input = document.createElement('input');
+      input.type = 'number'; input.min = '0.5'; input.max = '40'; input.step = '0.5'; input.value = '2';
+      input.setAttribute('aria-label', `Hours per week: ${name}`);
+      input.addEventListener('input', () => { t.hours = parseFloat(input.value) || 0; update(); });
+      hrs.append(input, document.createTextNode(' hrs/wk'));
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'task__rm'; rm.textContent = '✕';
+      rm.setAttribute('aria-label', `Remove ${name}`);
+      rm.addEventListener('click', () => { tasks = tasks.filter((x) => x.id !== t.id); li.remove(); update(); });
+      li.append(label, hrs, rm);
+      list.appendChild(li);
+      update();
     }
 
-    function updateTaskHours(taskId: number, hours: number) {
-      const task = tasks.find(t => t.id === taskId);
-      if (task) {
-        task.hours = hours;
-        calculate();
+    function update() {
+      const has = tasks.length > 0;
+      $('resultsPanel').hidden = !has;
+      $('resultsEmpty').hidden = has;
+      if (has) {
+        const rate = parseFloat(rateInput.value) || 0;
+        const weekly = tasks.reduce((s, t) => s + t.hours, 0);
+        const annual = weekly * 52 * rate;
+        const years = parseInt(horizon.value) || 3;
+        const saved = annual * REDUCTION * years;
+        const hoursBack = weekly * 52 * REDUCTION * years;
+        $('totalHours').textContent = `${fmt(weekly)} hrs`;
+        const pct = Math.round((weekly / 40) * 100);
+        $('weekEquivalent').textContent = pct > 1 ? `${pct}% of a full-time role` : '';
+        $('annualCost').textContent = '$' + Math.round(annual).toLocaleString('en-US');
+        $('totalSavings').textContent = '$' + Math.round(saved).toLocaleString('en-US');
+        $('timeSaved').textContent = `Plus ${Math.round(hoursBack).toLocaleString('en-US')} hours`;
+        const ins: string[] = [];
+        const weeks = Math.floor(hoursBack / 40);
+        if (weeks >= 1) ins.push(`Free up ${weeks} full work week${weeks > 1 ? 's' : ''}`);
+        if (saved >= 10000) ins.push(`Put $${Math.round(saved / 1000)}k back into the business`);
+        ins.push(`Drop ${Math.round(weekly * 52 * REDUCTION)} hrs/year of repetitive work`);
+        $('insights').replaceChildren(...ins.map((s) => { const li = document.createElement('li'); li.textContent = s; return li; }));
       }
+      renderCrossing();
+    }
+    rateInput.addEventListener('input', update);
+    horizon.addEventListener('change', update);
+
+    // ── The crossing: the visitor's own list, or six labelled examples ──
+    const rowsEl = $('crossRows');
+    let rowData: { hours: number }[] = [];
+
+    function renderCrossing() {
+      const mine = tasks.length > 0;
+      const src = mine
+        ? [...tasks].sort((a, b) => b.hours - a.hours).slice(0, 6)
+        : defaultTasks.map((name) => ({ name, hours: 2 }));
+      $('crossLabel').textContent = mine ? 'Your list' : 'The usual six (examples)';
+      $('readoutSource').textContent = mine ? '· your list' : '· examples';
+      rowsEl.replaceChildren(...src.map((t, i) => {
+        const li = document.createElement('li');
+        li.className = 'cross-row';
+        li.style.setProperty('--i', String(i));
+        li.style.setProperty('--n', String(src.length));
+        const slip = document.createElement('span');
+        slip.className = 'slip';
+        const nm = document.createElement('span'); nm.className = 'slip__name'; nm.textContent = t.name;
+        const hr = document.createElement('span'); hr.className = 'slip__hrs'; hr.textContent = `${fmt(t.hours)} hrs/wk`;
+        slip.append(nm, hr);
+        const run = document.createElement('span');
+        run.className = 'run';
+        run.textContent = runsAs[t.name] ?? runsDefault;
+        li.append(slip, run);
+        return li;
+      }));
+      rowData = src.map((t) => ({ hours: t.hours }));
+      measure();
+      frame();
     }
 
-    function removeTask(taskId: number) {
-      tasks = tasks.filter(t => t.id !== taskId);
-      const taskCard = document.querySelector(`[data-task-id="${taskId}"]`) as HTMLElement;
-      if (taskCard && taskCard.classList.contains('bg-[#292524]')) {
-        taskCard.style.opacity = '0';
-        taskCard.style.transform = 'translateX(-16px)';
-        taskCard.style.transition = 'all 0.2s';
-        setTimeout(() => taskCard.remove(), 200);
-      }
-      calculate();
+    // ── Calculator → booking ───────────────────────────────────
+    function summary() {
+      const rate = parseFloat(rateInput.value) || 0;
+      const weekly = tasks.reduce((s, t) => s + t.hours, 0);
+      const lst = tasks.map((t) => `${t.name} (${t.hours} hrs/wk)`).join('; ');
+      return `From the calculator: ${lst}. Total ${weekly} hrs/week at $${rate}/hr, about $${Math.round(weekly * 52 * rate).toLocaleString('en-US')}/year.`;
     }
-
-    function calculate() {
-      if (tasks.length === 0) {
-        resultsPanel.classList.add('hidden');
-        return;
-      }
-
-      resultsPanel.classList.remove('hidden');
-
-      const hourlyRate = parseFloat(hourlyRateInput.value) || 0;
-      const totalHoursPerWeek = tasks.reduce((sum, task) => sum + task.hours, 0);
-      const hoursPerYear = totalHoursPerWeek * 52;
-      const annualCost = hoursPerYear * hourlyRate;
-
-      const automationEfficiency = 0.70;
-      const hoursSavedPerYear = hoursPerYear * automationEfficiency;
-      const annualSavings = annualCost * automationEfficiency;
-
-      const timeHorizon = parseInt(timeHorizonSelect.value) || 3;
-      const totalSavings = annualSavings * timeHorizon;
-      const totalHoursSaved = hoursSavedPerYear * timeHorizon;
-
-      document.getElementById('totalHours')!.textContent = totalHoursPerWeek.toFixed(1) + ' hrs';
-
-      const pct = ((totalHoursPerWeek / 40) * 100).toFixed(0);
-      document.getElementById('weekEquivalent')!.textContent = Number(pct) > 1 ? `${pct}% of a full-time role` : '';
-
-      document.getElementById('annualCost')!.textContent = '$' + annualCost.toLocaleString('en-US', { maximumFractionDigits: 0 });
-      document.getElementById('totalSavings')!.textContent = '$' + totalSavings.toLocaleString('en-US', { maximumFractionDigits: 0 });
-      document.getElementById('timeSaved')!.textContent = `Plus ${Math.round(totalHoursSaved).toLocaleString()} hours back`;
-
-      const insights: string[] = [];
-      const weeksOfWork = Math.floor(totalHoursSaved / 40);
-      if (weeksOfWork >= 1) insights.push(`✓ Free up ${weeksOfWork} full work week${weeksOfWork > 1 ? 's' : ''}`);
-
-      const monthlyProjectEquiv = Math.floor(totalHoursSaved / 160);
-      if (monthlyProjectEquiv >= 1) insights.push(`✓ Take on ${monthlyProjectEquiv} extra project${monthlyProjectEquiv > 1 ? 's' : ''}`);
-
-      if (totalSavings >= 10000) insights.push(`✓ Reinvest $${Math.round(totalSavings / 1000)}k into growth`);
-
-      insights.push(`✓ Eliminate ${Math.round(hoursSavedPerYear)} hrs/year of repetitive work`);
-
-      document.getElementById('insights')!.innerHTML = insights.map(i =>
-        `<div class="text-[13px] text-[#D6D3D1] py-0.5">${i}</div>`
-      ).join('');
-    }
-
-    hourlyRateInput.addEventListener('input', calculate);
-    timeHorizonSelect.addEventListener('change', calculate);
-
-    // Hand the calculator results to the booking step
-    const CALENDLY_URL = 'https://calendly.com/scottmcfall/30min';
-
-    function calcSummary() {
-      const rate = parseFloat(hourlyRateInput.value) || 0;
-      const total = tasks.reduce((sum, t) => sum + t.hours, 0);
-      const list = tasks.map(t => `${t.name} (${t.hours} hrs/wk)`).join('; ');
-      const annual = Math.round(total * 52 * rate).toLocaleString('en-US');
-      return `From the calculator: ${list}. Total ${total} hrs/week at $${rate}/hr, about $${annual}/year.`;
-    }
-
-    document.getElementById('calcCta')!.addEventListener('click', (e) => {
-      const summary = calcSummary();
-      const details = document.getElementById('details') as HTMLTextAreaElement | null;
-      if (details && !details.value.includes('From the calculator')) {
-        details.value = details.value ? details.value + ' ' + summary : summary;
-      }
+    $('calcCta').addEventListener('click', (e) => {
+      const s = summary();
+      const details = $('details') as HTMLTextAreaElement;
+      if (!details.value.includes('From the calculator')) details.value = details.value ? `${details.value} ${s}` : s;
       const cal = (window as any).Calendly;
       if (cal && typeof cal.initPopupWidget === 'function') {
         e.preventDefault();
-        cal.initPopupWidget({ url: `${CALENDLY_URL}?a1=${encodeURIComponent(summary)}` });
+        cal.initPopupWidget({ url: `${CALENDLY_URL}?a1=${encodeURIComponent(s)}` });
       }
     });
+
+    // ── Scroll choreography (page-local, reads the engine's --sc-p) ──
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stacked = matchMedia('(max-width: 819px)');
+    const cross = $('crossing');
+    const crossStage = $('crossStage');
+    const fold = $('offer');
+    const book = $('book');
+    const divider = $('divider');
+    const readout = $('readoutHours');
+    const crossBack = $('crossBack');
+    const progress = (el: HTMLElement) => parseFloat(el.style.getPropertyValue('--sc-p')) || 0;
+
+    // Each slip travels to the divider: horizontally side by side, vertically when stacked.
+    function measure() {
+      const rows = rowsEl.querySelectorAll<HTMLElement>('.cross-row');
+      const stageBox = crossStage.getBoundingClientRect();
+      rows.forEach((row) => {
+        const slip = row.querySelector<HTMLElement>('.slip')!;
+        slip.style.transform = 'none';
+        const r = slip.getBoundingClientRect();
+        const dx = stageBox.left + stageBox.width / 2 - r.right - 8;
+        const dy = stageBox.top + stageBox.height / 2 - r.bottom - 6;
+        row.style.setProperty('--dx', `${Math.max(0, dx)}px`);
+        row.style.setProperty('--dy', `${Math.max(0, dy)}px`);
+        slip.style.transform = '';
+      });
+    }
+
+    function rowT(p: number, i: number, n: number) {
+      // Crossings spread across 0.08..0.84 of the act, overlapping slightly.
+      const step = 0.76 / Math.max(n, 1);
+      return ease(clamp((p - 0.08 - i * step) / (step * 1.35)));
+    }
+
+    let last = '';
+    function frame() {
+      const pc = progress(cross);
+      const rows = rowsEl.querySelectorAll<HTMLElement>('.cross-row');
+      let left = 0, total = 0;
+      const sig: string[] = [];
+      rows.forEach((row, i) => {
+        const t = rowT(pc, i, rows.length);
+        row.style.setProperty('--t', t.toFixed(3));
+        const h = rowData[i]?.hours ?? 0;
+        total += h;
+        left += h * (1 - REDUCTION * t);
+        sig.push(t.toFixed(2));
+      });
+      crossStage.setAttribute('data-sc-verify-state', sig.join(','));
+
+      // Before the crossing the readout shows the full list; after it, what's left.
+      const hours = cross.getBoundingClientRect().top > innerHeight ? total : left;
+      const txt = fmt(hours);
+      if (txt !== last) { readout.textContent = txt; last = txt; }
+      crossBack.textContent = fmt(total * REDUCTION);
+
+      // The fold: paper side collapses, divider sweeps to the left edge and goes.
+      const pf = progress(fold);
+      const f = 1 - ease(clamp((pf - 0.08) / 0.5));
+      fold.style.setProperty('--fold', f.toFixed(4));
+      const afterBook = book.getBoundingClientRect().top < innerHeight * 0.5;
+      const split = stacked.matches ? 0 : 50 * f;
+      divider.style.setProperty('--split', `${split}`);
+      divider.style.opacity = afterBook || f < 0.02 ? '0' : '1';
+      divider.style.visibility = afterBook || f < 0.02 ? 'hidden' : 'visible';
+      divider.setAttribute('data-sc-verify-state', `${split.toFixed(1)}|${f.toFixed(2)}`);
+    }
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; frame(); });
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', () => { measure(); frame(); });
+    document.fonts?.ready.then(() => { measure(); frame(); });
+    rowData = defaultTasks.map(() => ({ hours: 2 }));
+    if (reduce) document.documentElement.classList.add('is-reduced');
+    measure();
+    frame();
   </script>
 </Layout>
+
+<style is:global>
+  :root {
+    --paper: #E7E4DE;
+    --paper-ink: #1C1917;
+    --paper-soft: #55504A;
+    --paper-accent: #865710;
+    --forest: #15221B;
+    --forest-raise: #1C2C23;
+    --forest-ink: #ECEFE7;
+    --forest-soft: #A6B2A2;
+    --amber: #E3A53C;
+
+    --sc-canvas: var(--forest);
+    --sc-surface: var(--forest-raise);
+    --sc-ink: var(--forest-ink);
+    --sc-ink-soft: var(--forest-soft);
+    --sc-accent: var(--amber);
+    --sc-accent-ink: #15221B;
+    --sc-font-display: "Archivo", system-ui, sans-serif;
+    --sc-font-text: "Geist", system-ui, sans-serif;
+    --sc-shadow-color: 150 30% 4%;
+    --gut: clamp(1.25rem, 4vw, 4.5rem);
+  }
+  html body { background: var(--forest); color: var(--forest-ink); font-family: var(--sc-font-text); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ── Grounds ───────────────────────────────────────────── */
+  .side--manual {
+    --sc-ink: var(--paper-ink); --sc-ink-soft: var(--paper-soft); --sc-accent: var(--paper-accent);
+    background: var(--paper); color: var(--paper-ink);
+  }
+  .side--auto { background: var(--forest); color: var(--forest-ink); }
+  .soft { color: var(--sc-ink-soft); }
+  .small { font-size: var(--sc-t-sm); }
+  .label {
+    font-size: var(--sc-t-xs); font-weight: 600; letter-spacing: var(--sc-track-wide);
+    text-transform: uppercase; color: var(--sc-ink-soft); margin: 0;
+  }
+  .h2 {
+    font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-2xl);
+    line-height: var(--sc-leading-tight); letter-spacing: var(--sc-track-tight);
+    text-wrap: balance; margin: 0;
+  }
+  .h3 { font-family: var(--sc-font-display); font-weight: 700; font-size: var(--sc-t-lg); letter-spacing: var(--sc-track-snug); margin: 0; }
+
+  /* ── Buttons ──────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4em;
+    font-weight: 600; font-size: var(--sc-t-sm); line-height: 1; white-space: nowrap;
+    padding: 0.95em 1.4em; border-radius: var(--sc-r-sm); border: 1px solid transparent;
+    text-decoration: none; cursor: pointer;
+    transition: background-color 150ms var(--sc-ease-out), transform 120ms var(--sc-ease-out), border-color 150ms var(--sc-ease-out);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn--accent { background: var(--amber); color: #15221B; box-shadow: var(--sc-e1); }
+  .btn--ink { background: var(--paper-ink); color: var(--paper); }
+  .btn--ghost { background: transparent; color: inherit; border-color: color-mix(in oklab, currentColor 30%, transparent); }
+  .btn--sm { padding: 0.75em 1.1em; font-size: var(--sc-t-xs); }
+  .btn--block { width: 100%; }
+  @media (hover: hover) and (pointer: fine) {
+    .btn--accent:hover { background: #EDB656; }
+    .btn--ink:hover { background: #3A3531; }
+    .btn--ghost:hover { border-color: currentColor; }
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── The divider (fixed chrome) ───────────────────────── */
+  .divider {
+    --split: 50;
+    position: fixed; inset: 0 auto 0 0; width: 0; z-index: 40; pointer-events: none;
+    transform: translateX(calc(var(--split) * 1vw));
+    transition: opacity 200ms var(--sc-ease-out), visibility 200ms;
+  }
+  .divider__line {
+    position: absolute; top: 0; bottom: 0; left: -0.5px; width: 1px;
+    background: color-mix(in oklab, var(--amber) 70%, transparent);
+  }
+  .divider__top {
+    position: absolute; top: 1.1rem; left: 0; transform: translateX(-50%);
+    display: grid; justify-items: center; gap: 0.6rem; pointer-events: auto;
+  }
+  .divider__labels {
+    display: grid; grid-template-columns: 1fr 1fr; margin: 0;
+    font-size: var(--sc-t-xs); font-weight: 600; letter-spacing: var(--sc-track-wide); text-transform: uppercase;
+  }
+  .divider__labels span { padding: 0.45em 0.9em; white-space: nowrap; }
+  .divider__labels span:first-child { background: var(--paper); color: var(--paper-ink); text-align: right; border-radius: var(--sc-r-sm) 0 0 var(--sc-r-sm); }
+  .divider__labels span:last-child { background: var(--forest-raise); color: var(--forest-ink); border-radius: 0 var(--sc-r-sm) var(--sc-r-sm) 0; }
+  .divider__cta { box-shadow: var(--sc-e2); }
+  .divider__readout {
+    position: absolute; bottom: 1.1rem; left: 0; transform: translateX(-50%); margin: 0;
+    white-space: nowrap; font-size: var(--sc-t-xs); color: var(--forest-ink);
+    background: var(--forest-raise); border: 1px solid color-mix(in oklab, var(--amber) 45%, transparent);
+    padding: 0.5em 0.95em; border-radius: var(--sc-r-pill); box-shadow: var(--sc-e2);
+    font-variant-numeric: tabular-nums;
+  }
+  .divider__readout strong { color: var(--amber); font-size: 1.15em; }
+  .divider__readout span { color: var(--forest-soft); }
+
+  /* ── Pinned stages split down the middle ─────────────── */
+  .stage { display: grid; grid-template-columns: 1fr 1fr; }
+  .stage > .side { position: relative; overflow: hidden; }
+
+  /* 1 · hero */
+  .wordmark { position: absolute; top: 1.4rem; left: var(--gut); margin: 0; font-family: var(--sc-font-display); font-weight: 800; font-size: 1.05rem; letter-spacing: var(--sc-track-snug); }
+  .plane { position: absolute; inset: -10% 0; pointer-events: none; }
+  .plane--ruling {
+    background: repeating-linear-gradient(to bottom, transparent 0 39px, color-mix(in oklab, var(--paper-ink) 9%, transparent) 39px 40px),
+                linear-gradient(to right, transparent 0 calc(var(--gut) + 3.2rem), color-mix(in oklab, #9B2C1F 30%, transparent) calc(var(--gut) + 3.2rem) calc(var(--gut) + 3.2rem + 1px), transparent 0);
+    transform: translateY(calc(var(--sc-p, 0) * -40px));
+  }
+  .plane--schedule {
+    background: repeating-linear-gradient(to bottom, transparent 0 79px, color-mix(in oklab, var(--forest-ink) 6%, transparent) 79px 80px);
+    transform: translateY(calc(var(--sc-p, 0) * -20px));
+  }
+  .hero-title {
+    position: absolute; inset-inline: 0; top: 24vh; z-index: 2; margin: 0;
+    display: grid; grid-template-columns: 1fr 1fr; pointer-events: none;
+    font-family: var(--sc-font-display); font-weight: 800; line-height: 0.98; letter-spacing: var(--sc-track-tight);
+    font-size: clamp(2.2rem, 1.2rem + 3.6vw, 4.6rem);
+  }
+  .hero-title > span { padding-inline: var(--gut) calc(var(--gut) + 1rem); text-wrap: balance; }
+  .hero-title__a { color: var(--paper-ink); }
+  .hero-title__b { color: var(--forest-ink); padding-left: calc(var(--gut) + 1rem) !important; }
+  .hero-sub {
+    position: absolute; left: 50%; top: calc(24vh + 9.5rem); z-index: 2;
+    padding-inline: calc(var(--gut) + 1rem) var(--gut); max-width: 50%;
+    display: grid; gap: 1.5rem; justify-items: start;
+  }
+  .hero-sub p { margin: 0; color: var(--forest-soft); max-width: 36ch; font-size: var(--sc-t-base); text-wrap: pretty; }
+
+  .hero-slips { position: absolute; inset: 0; z-index: 3; }
+  .slip {
+    display: inline-flex; align-items: baseline; gap: 0.8em;
+    background: #F7F5F0; color: var(--paper-ink); border: 1px solid #D5D0C7;
+    padding: 0.6em 0.9em; border-radius: 3px; font-size: var(--sc-t-sm); font-weight: 500;
+    box-shadow: 0 1px 2px rgb(40 30 20 / 0.10), 0 6px 14px -6px rgb(40 30 20 / 0.22);
+  }
+  .slip--loose {
+    position: absolute; left: var(--x); top: var(--y); white-space: nowrap;
+    transform: translateY(calc(var(--sc-p, 0) * -170px * var(--k))) rotate(var(--r));
+  }
+  .hero-runs {
+    position: absolute; left: calc(var(--gut) + 1rem); right: var(--gut); bottom: 12vh; z-index: 2;
+    list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem;
+    font-size: var(--sc-t-xs); color: var(--forest-soft); font-variant-numeric: tabular-nums;
+  }
+  .hero-runs li {
+    padding: 0.55em 0 0.55em 1.1em; border-top: 1px solid color-mix(in oklab, var(--forest-ink) 10%, transparent);
+    position: relative;
+    opacity: clamp(0.25, calc(0.25 + (var(--sc-p, 0) * 2.2 - var(--k) * 0.35)), 1);
+    transform: translateY(calc(var(--sc-p, 0) * -60px));
+  }
+  .hero-runs li::before { content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--amber); }
+
+  /* 2 · calculator (flow, split) */
+  .split-flow { position: relative; }
+  .calc { display: grid; grid-template-columns: 1fr 1fr; }
+  .calc > .side { padding-block: clamp(7rem, 10vw, 9rem) clamp(4rem, 9vw, 8rem); }
+  .col { padding-inline: var(--gut) calc(var(--gut) + 1rem); max-width: 40rem; margin-left: auto; }
+  .side--auto > .col, .side--auto .col { padding-inline: calc(var(--gut) + 1rem) var(--gut); margin-left: 0; margin-right: auto; }
+  .calc .col > * + * { margin-top: 1.5rem; }
+  .field label { display: block; font-size: var(--sc-t-sm); font-weight: 600; margin-bottom: 0.5rem; }
+  .rate { display: flex; align-items: baseline; gap: 0.5rem; font-size: var(--sc-t-lg); color: var(--paper-soft); }
+  .rate input {
+    width: 5ch; font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-xl); color: var(--paper-ink);
+    background: transparent; border: 0; border-bottom: 2px solid var(--paper-ink); padding: 0 0 0.1em;
+  }
+  .presets { margin-top: 0.75rem; background: #F7F5F0; border: 1px solid #D5D0C7; border-radius: var(--sc-r-sm); padding: 0.9rem; }
+  .presets__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+  .preset-btn {
+    text-align: left; font-size: var(--sc-t-sm); padding: 0.6em 0.75em; border-radius: 4px; cursor: pointer;
+    background: var(--paper); border: 1px solid transparent; color: var(--paper-ink);
+    transition: background-color 140ms var(--sc-ease-out), border-color 140ms var(--sc-ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) { .preset-btn:hover { border-color: var(--paper-ink); } }
+  .presets__custom { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+  .presets__custom input, .task__hrs input {
+    flex: 1; min-width: 0; background: #fff; border: 1px solid #CFC9BF; border-radius: 4px; padding: 0.6em 0.75em; font-size: var(--sc-t-sm); color: var(--paper-ink);
+  }
+  .task-list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
+  .task {
+    display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.75rem;
+    background: #F7F5F0; border: 1px solid #D5D0C7; border-radius: 3px; padding: 0.55rem 0.75rem;
+    box-shadow: 0 1px 2px rgb(40 30 20 / 0.08);
+  }
+  .task__name { font-weight: 500; font-size: var(--sc-t-sm); }
+  .task__hrs { display: inline-flex; align-items: center; gap: 0.25rem; font-size: var(--sc-t-xs); color: var(--paper-soft); }
+  .task__hrs input { width: 4.2rem; flex: none; padding: 0.4em 0.5em; }
+  .task__rm { background: none; border: 0; color: var(--paper-soft); cursor: pointer; padding: 0.4rem; border-radius: 4px; }
+  .task__rm:hover { color: #9B2C1F; }
+  .figures { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 0; }
+  .figures dt { font-size: var(--sc-t-xs); text-transform: uppercase; letter-spacing: var(--sc-track-wide); color: var(--forest-soft); font-weight: 600; }
+  .figures dd { margin: 0.3rem 0 0; font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-xl); font-variant-numeric: tabular-nums; }
+  .figures dd.small { font-family: var(--sc-font-text); font-weight: 400; font-size: var(--sc-t-xs); }
+  .results > * + * { margin-top: 1.5rem; }
+  .savings { border-top: 1px solid color-mix(in oklab, var(--forest-ink) 12%, transparent); padding-top: 1.25rem; }
+  .savings select { background: var(--forest-raise); color: var(--forest-ink); border: 1px solid color-mix(in oklab, var(--forest-ink) 25%, transparent); border-radius: 4px; padding: 0.2em 0.4em; }
+  .savings__total { margin: 0.4rem 0 0; font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-3xl); color: var(--amber); letter-spacing: var(--sc-track-tight); line-height: 1; font-variant-numeric: tabular-nums; }
+  .insights { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.3rem; font-size: var(--sc-t-sm); color: var(--forest-soft); }
+  .insights li::before { content: "✓ "; color: var(--amber); }
+
+  /* 3 · the crossing (peak) */
+  .cross-head { position: absolute; top: 7.5rem; }
+  .side--manual .cross-head { right: calc(var(--gut) + 1rem); }
+  .side--auto .cross-head { left: calc(var(--gut) + 1rem); }
+  .cross-rows {
+    position: absolute; inset: 0; margin: 0; padding: 8.5rem 0 7rem; list-style: none;
+    display: grid; align-content: center; gap: clamp(0.5rem, 1.6vh, 1rem); counter-reset: none;
+  }
+  .cross-row { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 3rem; }
+  .cross-row .slip {
+    justify-self: end; margin-right: calc(var(--gut) + 1rem); max-width: calc(100% - var(--gut) * 2);
+    transform: translateX(calc(var(--t, 0) * var(--dx, 0px))) rotate(calc((1 - var(--t, 0)) * (var(--i) - 2.5) * 0.6deg));
+    opacity: calc(1 - clamp(0, (var(--t, 0) - 0.7) / 0.3, 1));
+  }
+  .slip__name { font-weight: 600; }
+  .slip__hrs { color: var(--paper-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cross-row .run {
+    padding-left: calc(var(--gut) + 1rem); padding-right: var(--gut); max-width: 34rem;
+    font-size: var(--sc-t-sm); color: var(--forest-ink); position: relative;
+    opacity: clamp(0, (var(--t, 0) - 0.55) / 0.45, 1);
+    transform: translateX(calc((1 - var(--t, 0)) * -28px));
+  }
+  .cross-row .run::before {
+    content: ""; position: absolute; left: calc(var(--gut) + 1rem - 0.95rem); top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+  }
+  .cross-you {
+    position: absolute; left: 50%; bottom: 4.5rem; margin: 0; max-width: 44ch; z-index: 2;
+    padding-left: calc(var(--gut) + 1rem); font-size: var(--sc-t-base); color: var(--forest-soft);
+  }
+  .cross-you strong { color: var(--amber); font-size: 1.3em; font-variant-numeric: tabular-nums; }
+
+  /* 4 · proof (flow + reveal per side) */
+  .proof-head, .proof-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .proof-head > .side { padding-block: clamp(5rem, 10vw, 8rem) clamp(2rem, 4vw, 3rem); }
+  .proof-row > .side { padding-block: clamp(2rem, 4vw, 3.25rem); border-top: 1px solid color-mix(in oklab, currentColor 10%, transparent); }
+  .proof-row:last-child > .side { padding-bottom: clamp(5rem, 10vw, 8rem); }
+  .proof-row .col > * + * { margin-top: 0.6rem; }
+  .proof-before { margin: 0; font-family: var(--sc-font-display); font-weight: 600; font-size: var(--sc-t-lg); line-height: 1.3; letter-spacing: var(--sc-track-snug); max-width: 28ch; margin-left: auto; text-align: right; }
+  .side--manual .label { text-align: right; }
+  .proof-head .side--manual .h2 { text-align: right; }
+  .tag { display: inline-block; margin: 0.25rem 0 0; font-size: var(--sc-t-xs); font-weight: 600; color: var(--amber); }
+  .proof-row .soft { margin-top: 0.5rem; max-width: 46ch; }
+
+  /* 5 · the fold */
+  .act-fold .stage { display: block; background: var(--forest); }
+  .act-fold { --fold: 1; }
+  .act-fold .fold-paper {
+    position: absolute; inset: 0 auto 0 0; width: 50%;
+    transform-origin: left center; transform: scaleX(var(--fold));
+    display: grid; align-items: center; justify-items: end;
+  }
+  .fold-left {
+    margin: 0; padding-right: calc(var(--gut) + 1rem); font-family: var(--sc-font-display); font-weight: 700;
+    font-size: var(--sc-t-xl); color: var(--paper-soft); letter-spacing: var(--sc-track-snug);
+    opacity: clamp(0, (var(--fold) - 0.35) / 0.65, 1);
+  }
+  .offer {
+    position: absolute; top: 50%; left: 50%; width: min(46rem, 100% - 2 * var(--gut));
+    transform: translate(calc(-50% + (25vw - 2rem) * var(--fold) * 0.6), -50%);
+    display: grid; gap: 1.75rem;
+  }
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid color-mix(in oklab, var(--forest-ink) 18%, transparent); }
+  .ledger li {
+    display: grid; grid-template-columns: 11rem 1fr auto; gap: 1.25rem; align-items: baseline;
+    padding: 1rem 0; border-bottom: 1px solid color-mix(in oklab, var(--forest-ink) 18%, transparent);
+  }
+  .ledger__name { font-weight: 600; }
+  .ledger__what { color: var(--forest-soft); font-size: var(--sc-t-sm); }
+  .ledger__price { font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-lg); font-variant-numeric: tabular-nums; color: var(--amber); white-space: nowrap; }
+  .offer__foot { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center; justify-content: space-between; }
+  .offer__foot p { margin: 0; max-width: 46ch; font-size: var(--sc-t-sm); }
+  .offer__foot strong { color: var(--forest-ink); }
+
+  /* 6 · booking, answers, footer */
+  .book { padding-block: clamp(5rem, 10vw, 9rem) 2rem; }
+  .wrap { max-width: 72rem; margin-inline: auto; padding-inline: var(--gut); }
+  .book__head > * + * { margin-top: 0.9rem; }
+  .book__head .soft { max-width: 52ch; }
+  .book__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.5rem, 4vw, 3.5rem); margin-top: 2.5rem; align-items: start; }
+  .form { display: grid; gap: 1rem; background: var(--forest-raise); border: 1px solid color-mix(in oklab, var(--forest-ink) 10%, transparent); border-radius: var(--sc-r-md); padding: clamp(1.25rem, 3vw, 2rem); box-shadow: var(--sc-e2); }
+  .form__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form label { display: block; font-size: var(--sc-t-sm); font-weight: 600; margin-bottom: 0.4rem; }
+  .form input, .form select, .form textarea {
+    width: 100%; background: var(--forest); color: var(--forest-ink); border: 1px solid color-mix(in oklab, var(--forest-ink) 22%, transparent);
+    border-radius: var(--sc-r-sm); padding: 0.75em 0.85em; font-size: var(--sc-t-sm);
+  }
+  .form input::placeholder, .form textarea::placeholder { color: color-mix(in oklab, var(--forest-soft) 75%, transparent); }
+  .form textarea { resize: vertical; }
+  .cal { min-width: 280px; height: 700px; border-radius: var(--sc-r-md); overflow: hidden; background: var(--forest-raise); }
+  .faq { margin-top: clamp(4rem, 8vw, 7rem); max-width: 48rem; }
+  .faq__list { margin: 1.75rem 0 0; border-top: 1px solid color-mix(in oklab, var(--forest-ink) 14%, transparent); }
+  .faq__item { padding: 1.1rem 0; border-bottom: 1px solid color-mix(in oklab, var(--forest-ink) 14%, transparent); }
+  .faq__item dt { font-weight: 600; }
+  .faq__item dd { margin: 0.4rem 0 0; color: var(--forest-soft); font-size: var(--sc-t-sm); max-width: 62ch; }
+  .foot { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: clamp(4rem, 8vw, 6rem); padding-top: 1.25rem; border-top: 1px solid color-mix(in oklab, var(--forest-ink) 14%, transparent); font-size: var(--sc-t-xs); color: var(--forest-soft); }
+  .foot p { margin: 0; }
+  .foot a { color: var(--forest-soft); }
+
+  /* ── Phone: the split stacks; paper on top, forest below ── */
+  @media (max-width: 819px) {
+    .divider { display: none; }
+    .stage, .calc, .proof-head, .proof-row, .cross-row, .hero-title { grid-template-columns: 1fr; }
+    .stage { grid-template-rows: 1fr 1fr; }
+    .col, .side--auto .col { padding-inline: var(--gut); margin: 0; max-width: none; }
+    .hero-title { top: auto; bottom: 50%; grid-template-rows: auto; font-size: clamp(2rem, 8.4vw, 2.6rem); }
+    .hero-title > span { padding-inline: var(--gut) !important; }
+    .hero-title__b { position: absolute; top: calc(100% + 2rem); left: 0; right: 0; }
+    .act-hero .hero-title { bottom: calc(50% + 1.5rem); }
+    .hero-sub { left: 0; max-width: none; top: calc(50% + 5.5rem); padding-inline: var(--gut); }
+    .wordmark { left: var(--gut); }
+    .hero-slips .slip--loose { font-size: var(--sc-t-xs); }
+    .hero-slips .slip--loose:nth-child(n+3) { display: none; }
+    .hero-slips { top: 4rem; bottom: auto; height: 7rem; }
+    .hero-slips .slip--loose { top: calc(var(--y) - 60%); }
+    .hero-runs { display: none; }
+
+    .cross-head { top: 1.25rem; }
+    .side--manual .cross-head { right: auto; left: var(--gut); }
+    .side--auto .cross-head { left: var(--gut); }
+    .cross-rows { padding: 3.25rem 0 0; display: block; }
+    .cross-row { position: static; display: block; min-height: 0; }
+    .cross-row .slip {
+      position: absolute; left: var(--gut); top: calc(3.2rem + var(--i) * 2.55rem);
+      margin: 0; font-size: var(--sc-t-xs); padding: 0.45em 0.7em;
+      transform: translateY(calc(var(--t, 0) * var(--dy, 0px)));
+    }
+    .cross-row .slip__hrs { display: none; }
+    .cross-row .run {
+      position: absolute; left: 0; right: 0; top: calc(50% + 3rem + var(--i) * 2.55rem);
+      padding-inline: calc(var(--gut) + 0.9rem) var(--gut); font-size: var(--sc-t-xs); max-width: none;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transform: translateY(calc((1 - var(--t, 0)) * -14px));
+    }
+    .cross-row .run::before { left: var(--gut); }
+    .cross-you { left: 0; right: 0; bottom: 1.25rem; padding-inline: var(--gut); max-width: none; font-size: var(--sc-t-sm); }
+    .act-cross .side--auto .cross-head { top: 1.25rem; }
+
+    .side--manual .label, .proof-before, .proof-head .side--manual .h2 { text-align: left; margin-left: 0; }
+    .proof-head > .side { padding-block: 3.5rem 1.5rem; }
+
+    .act-fold .fold-paper { width: 100%; height: 50%; inset: 0 0 auto 0; transform-origin: center top; transform: scaleY(var(--fold)); justify-items: start; }
+    .fold-left { padding-inline: var(--gut); }
+    .offer { left: 0; width: 100%; padding-inline: var(--gut); top: auto; bottom: 1.5rem; transform: translateY(calc(var(--fold) * 30%)); gap: 1.1rem; }
+    .offer .h2 { font-size: var(--sc-t-xl); }
+    .ledger li { grid-template-columns: 1fr auto; gap: 0.2rem 1rem; padding: 0.7rem 0; }
+    .ledger__what { grid-column: 1 / -1; grid-row: 2; font-size: var(--sc-t-xs); }
+    .offer__foot p { font-size: var(--sc-t-xs); }
+
+    .book__grid, .form__pair { grid-template-columns: 1fr; }
+  }
+
+  /* ── Reduced motion: same meaning, no travel ── */
+  @media (prefers-reduced-motion: reduce) {
+    .slip--loose, .plane, .hero-runs li { transform: rotate(var(--r, 0deg)) !important; }
+    .hero-runs li { opacity: 1; }
+    .cross-row .slip { transform: none !important; opacity: calc(1 - var(--t, 0) * 0.55); }
+    .cross-row .run { transform: none !important; }
+    .fold-paper { transform: none !important; opacity: var(--fold); }
+    .offer { transform: translate(-50%, -50%) !important; }
+    .divider { transform: translateX(50vw) !important; }
+  }
+  @media (prefers-reduced-motion: reduce) and (max-width: 819px) {
+    .offer { transform: none !important; }
+  }
+</style>
