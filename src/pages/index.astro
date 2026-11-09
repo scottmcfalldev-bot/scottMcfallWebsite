@@ -1,51 +1,45 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const faqs = [
+  {
+    q: "What does this cost?",
+    a: "The bottleneck call is free. A first automation build is a fixed $2,500 for one workflow, paid 50% up front. Keep It Running is $750 a month. My first three founding clients get the build for $1,500 in exchange for a written case study.",
+  },
+  {
+    q: "Is my client data safe?",
+    a: "I work inside your accounts with the least access the job needs, and nothing is copied to my own systems. You can remove my access the day we finish. Happy to sign an NDA before we start.",
+  },
+  {
+    q: "What tools do you use?",
+    a: "Whatever fits what you already pay for: Zapier, Make or n8n for the plumbing, Claude for the AI steps, and custom code where those fall short. I connect Asana, Monday, ClickUp, Slack, Google Workspace, HubSpot, Harvest, QuickBooks, Stripe, Airtable and most tools with an API.",
+  },
+  {
+    q: "What happens if it breaks?",
+    a: "Every build sends an alert when something fails, so you're not the one who finds out. Fixes are included for 30 days after launch. On Keep It Running, I fix problems within one business day.",
+  },
+  {
+    q: "I'm not technical. Is that a problem?",
+    a: "No. You know where the time goes. I handle the tech, and you get a short written guide to what was built and how to change it.",
+  },
+  {
+    q: "How fast?",
+    a: "The one-page plan arrives within 48 hours of our call. A build is live in about two weeks.",
+  },
+  {
+    q: "Do you build anything besides automations?",
+    a: "Yes. I also build lead-capture tools like calculators and quizzes, and small internal apps. Most agencies start with an automation, though.",
+  },
+];
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What does this cost?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most projects are $500–$2,000. Fixed price upfront — no hourly surprises.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "I'm not technical. Is that a problem?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Nope. Most of my clients aren't. You know your business — I handle the tech.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What tools can you connect?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Monday, Asana, Slack, Google Workspace, HubSpot, Mailchimp, Calendly, Stripe, Airtable, Notion — if it has an API, I can probably connect it.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How fast can you deliver?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Something working within a week. Full launch in 2–4 weeks.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I maintain it after?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. You own it, understand it, and can adjust it. Ongoing support available if you want it.",
-      },
-    },
-  ],
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 ---
 
@@ -57,14 +51,15 @@ const faqSchema = {
       <span class="font-[800] text-[17px] tracking-[-0.5px] text-[#1C1917]">Scott McFall</span>
       <nav aria-label="Main navigation" class="hidden sm:flex items-center gap-8">
         <a href="#problems" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Problems</a>
-        <a href="#services" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Services</a>
+        <a href="#offer" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Pricing</a>
         <a href="#work" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">Work</a>
+        <a href="#faq" class="nav-link text-[13px] font-medium tracking-[0.3px] uppercase text-[#78716C] hover:text-[#1C1917] transition-colors">FAQ</a>
       </nav>
       <a
         href="#contact"
-        class="text-[13px] font-semibold bg-[#1C1917] text-[#FAFAF9] px-6 py-2.5 rounded-md hover:bg-[#44403C] transition-all tracking-[0.2px]"
+        class="text-[13px] font-semibold bg-[#1C1917] text-[#FAFAF9] px-5 py-2.5 rounded-md hover:bg-[#44403C] transition-all tracking-[0.2px] whitespace-nowrap"
       >
-        Get in Touch
+        Book a Free Call
       </a>
     </div>
   </header>
@@ -75,19 +70,19 @@ const faqSchema = {
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12">
         <!-- Left: copy -->
         <div class="lg:max-w-[540px]">
-          <p class="fade-up text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-6" style="animation-delay: 0ms">Workflow & Growth Consultant</p>
-          <h1 class="fade-up text-[clamp(36px,5.5vw,60px)] font-[900] leading-[1.05] tracking-[-2px] text-[#1C1917] mb-6" style="animation-delay: 80ms">
-            Small team.<br>Big backlog.<br><span class="text-[#4A6741]">I fix that.</span>
+          <p class="fade-up text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-6" style="animation-delay: 0ms">For agencies &amp; consulting firms, 5–30 people</p>
+          <h1 class="fade-up text-[clamp(34px,5vw,54px)] font-[900] leading-[1.05] tracking-[-2px] text-[#1C1917] mb-6" style="animation-delay: 80ms">
+            Your team types the same update into five tools.<br><span class="text-[#4A6741]">I automate that.</span>
           </h1>
           <p class="fade-up text-[17px] text-[#78716C] mb-9 max-w-[480px] leading-[1.65]" style="animation-delay: 160ms">
-            I connect your tools, automate the busywork, and build pages that capture leads — so you stop losing time and money to things a human shouldn't be doing.
+            Status updates, client onboarding, weekly reports, timesheets to invoices. Book a free 30-minute call. Within 48 hours you get a one-page plan for the first workflow to automate, with a fixed price.
           </p>
           <div class="fade-up flex gap-3 flex-wrap" style="animation-delay: 240ms">
             <a href="#contact" class="inline-block bg-[#1C1917] text-[#FAFAF9] font-semibold px-6 py-2.5 rounded-md hover:bg-[#44403C] transition-all text-[13px] tracking-[0.2px]">
-              Book a Free Consultation
+              Book a free bottleneck call
             </a>
-            <a href="#problems" class="inline-block bg-transparent text-[#1C1917] font-semibold px-6 py-2.5 rounded-md border-[1.5px] border-[#D6D3D1] hover:border-[#1C1917] transition-all text-[13px] tracking-[0.2px]">
-              See If This Is You
+            <a href="#offer" class="inline-block bg-transparent text-[#1C1917] font-semibold px-6 py-2.5 rounded-md border-[1.5px] border-[#D6D3D1] hover:border-[#1C1917] transition-all text-[13px] tracking-[0.2px]">
+              See what it costs
             </a>
           </div>
         </div>
@@ -96,9 +91,9 @@ const faqSchema = {
         <div class="fade-up lg:max-w-[340px] w-full" style="animation-delay: 300ms">
           <div class="bg-[#F5F5F4] border border-[#E7E5E4] rounded-2xl p-7 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-[3px] bg-[#4A6741]"></div>
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-4">Real Client Results</p>
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-4">Client result · consulting firm</p>
             <p class="text-[40px] font-[900] tracking-[-1.5px] text-[#1C1917] leading-none mb-1">$21k+</p>
-            <p class="text-[14px] text-[#78716C] mb-5">saved per year</p>
+            <p class="text-[14px] text-[#78716C] mb-5">estimated savings per year</p>
             <div class="space-y-3 pt-4 border-t border-[#E7E5E4]">
               <div class="flex items-baseline justify-between">
                 <span class="text-[13px] text-[#57534E]">Hours reclaimed weekly</span>
@@ -113,7 +108,7 @@ const faqSchema = {
                 <span class="text-[15px] font-[800] text-[#1C1917]">80%</span>
               </div>
             </div>
-            <p class="text-[11px] text-[#A8A29E] mt-4 italic">Based on Formation Consulting engagement</p>
+            <p class="text-[11px] text-[#A8A29E] mt-4 italic">Formation Consulting. Estimated from hours saved, not audited.</p>
           </div>
         </div>
       </div>
@@ -125,7 +120,7 @@ const faqSchema = {
         <p class="text-[13px] text-[#A8A29E] font-medium">
           Worked with <strong class="text-[#57534E] font-semibold">Lewis Howes</strong>,
           <strong class="text-[#57534E] font-semibold">JJ Virgin</strong>,
-          and growing teams in media, health & education.
+          and <strong class="text-[#57534E] font-semibold">Formation Consulting</strong>.
         </p>
       </div>
     </section>
@@ -134,67 +129,71 @@ const faqSchema = {
     <section id="problems" class="bg-[#F0F4EE] border-b border-[#E7E5E4] py-20">
       <div class="max-w-[1000px] mx-auto px-7">
         <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Sound Familiar?</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-12">The stuff nobody has time to fix.</h2>
+        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">Where agency hours quietly go.</h2>
+        <p class="text-[15px] text-[#78716C] mb-12">None of this is billable. All of it can run on its own.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#D6D3D1] border border-[#D6D3D1] rounded-xl overflow-hidden">
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 0ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Your tools don't talk to each other</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Same update in Monday, Slack, your spreadsheet, and your CRM. Four times. Every day.</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Status updates live in five places</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">The same project update goes into Asana, Slack, the client email and the spreadsheet. By hand. Every day.</p>
           </div>
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 80ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Copy-paste is your "integration"</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Export, reformat, email. Hours gone, and one mistake means starting over.</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Client reports eat Friday</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Someone pulls numbers from three tools, pastes them into a deck, and sends it. Every client, every week.</p>
           </div>
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 160ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Leads fall through the cracks</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Someone fills out your form and then... nothing. No sequence, no tracking.</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Onboarding is a checklist in someone's head</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">New client signs. Folders, channels, intake forms and kickoff invites get set up from memory, and something gets missed.</p>
           </div>
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 240ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">You need a landing page yesterday</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">You know you need a better funnel. Agency quotes are $5k+. You just need something that works.</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Timesheets don't match invoices</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Hours live in Harvest, budgets in a spreadsheet, invoices in QuickBooks. Month-end is a reconciliation project.</p>
           </div>
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 320ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Someone's doing 10 hrs/week of busywork</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Formatting reports, sending reminders, updating statuses. It shouldn't be done by a human.</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Proposals start from a blank page</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Every proposal is rebuilt from the last one, with old client names left in. Hours per deal you never bill for.</p>
           </div>
           <div class="cell-fade bg-white/85 p-8 transition-all duration-300 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(74,103,65,0.1)] hover:z-10 hover:relative group" style="animation-delay: 400ms">
-            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">You don't know where to start</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">You've heard of Zapier, Make, n8n. Who has time to learn them when you're already stretched?</p>
+            <h3 class="text-[15px] font-bold mb-2 leading-tight group-hover:text-[#4A6741] transition-colors">Leads go quiet after the form</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Someone fills out your contact form and then nothing happens until a person remembers to reply.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── SERVICES ── -->
-    <section id="services" class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
+    <!-- ── OFFER ── -->
+    <section id="offer" class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
       <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">What I Do</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">Two things. Done well.</h2>
-        <p class="text-[15px] text-[#78716C] mb-12">Most of what's slowing your team down falls into one of these.</p>
-        <div class="grid sm:grid-cols-2 gap-6">
-          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-9 border border-[#E7E5E4] relative hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] transition-shadow">
-            <div class="absolute top-4 right-6 text-[72px] font-[900] text-[#E7E5E4] leading-none tracking-[-3px]">01</div>
-            <h3 class="text-[20px] font-[800] tracking-[-0.5px] mb-2.5">Integrations & Automation</h3>
-            <p class="text-[14px] text-[#78716C] mb-5 leading-relaxed">I connect your existing tools and eliminate the repetitive work eating your team's week.</p>
-            <ul class="space-y-1">
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Monday → Slack notifications</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Calendar → Asana task creation</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Form fills → CRM + email sequence</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Raw data → auto-formatted reports</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Custom API connections</li>
-            </ul>
+        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">How to Start</p>
+        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">One call. One workflow. One fixed price.</h2>
+        <p class="text-[15px] text-[#78716C] mb-12">Start small, see it work, then decide if you want more.</p>
+        <div class="grid sm:grid-cols-3 gap-5">
+          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border-2 border-[#4A6741] relative flex flex-col">
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 1</p>
+            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">Bottleneck Call</h3>
+            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">Free</p>
+            <p class="text-[13px] text-[#78716C] leading-relaxed mb-5">30 minutes walking through your team's week. Within 48 hours you get a one-page plan: the first workflow to automate, the hours it saves, and a fixed price.</p>
+            <a href="#contact" class="mt-auto block text-center bg-[#1C1917] text-[#FAFAF9] font-semibold px-5 py-2.5 rounded-md hover:bg-[#44403C] transition-colors text-[13px]">Book the call</a>
           </div>
-          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-9 border border-[#E7E5E4] relative hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] transition-shadow" style="animation-delay: 80ms">
-            <div class="absolute top-4 right-6 text-[72px] font-[900] text-[#E7E5E4] leading-none tracking-[-3px]">02</div>
-            <h3 class="text-[20px] font-[800] tracking-[-0.5px] mb-2.5">Landing Pages & Funnels</h3>
-            <p class="text-[14px] text-[#78716C] mb-5 leading-relaxed">Fast, focused pages that turn visitors into leads. No bloated WordPress — just pages built to convert.</p>
-            <ul class="space-y-1">
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Lead capture with email integration</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Quiz & calculator lead magnets</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">Sales funnels with auto follow-up</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">A/B testing & conversion optimization</li>
-              <li class="text-[13px] text-[#57534E] pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[9px] before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#4A6741]">SEO-optimized pages that rank</li>
-            </ul>
+          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border border-[#E7E5E4] flex flex-col" style="animation-delay: 80ms">
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 2</p>
+            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">First Automation</h3>
+            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">$2,500</p>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">One workflow built, tested and handed over in about two weeks. Fixed scope, 50% to start. Failure alerts and 30 days of fixes included.</p>
           </div>
+          <div class="scroll-fade bg-[#FAFAF9] rounded-xl p-7 border border-[#E7E5E4] flex flex-col" style="animation-delay: 160ms">
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Step 3 · optional</p>
+            <h3 class="text-[19px] font-[800] tracking-[-0.5px] mb-1">Keep It Running</h3>
+            <p class="text-[28px] font-[900] tracking-[-1px] text-[#1C1917] mb-3">$750<span class="text-[15px] font-semibold text-[#78716C]">/mo</span></p>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Monitoring, fixes within one business day, small tweaks, and one small new automation each month. Cancel any time.</p>
+          </div>
+        </div>
+        <div class="scroll-fade mt-6 rounded-xl bg-[#F0F4EE] border border-[#D6D3D1] p-6 sm:flex sm:items-center sm:justify-between gap-6">
+          <div>
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-1">Founding clients · 3 spots</p>
+            <p class="text-[15px] text-[#1C1917] font-semibold mb-1">Your first automation for $1,500 instead of $2,500.</p>
+            <p class="text-[13px] text-[#78716C]">In return: a short written case study with your real before-and-after numbers, and permission to name your firm.</p>
+          </div>
+          <a href="#contact" class="mt-4 sm:mt-0 inline-block shrink-0 bg-[#4A6741] text-white font-semibold px-5 py-2.5 rounded-md hover:bg-[#3A5233] transition-colors text-[13px]">Ask about a spot</a>
         </div>
       </div>
     </section>
@@ -235,14 +234,14 @@ const faqSchema = {
         <div id="taskPresets" class="hidden bg-[#292524] border border-[#44403C] rounded-[10px] p-6 mb-5">
           <p class="text-[13px] font-semibold text-[#D6D3D1] mb-3">Pick a common task or add your own:</p>
           <div class="grid sm:grid-cols-2 gap-2">
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Status updates across tools">Status updates across tools</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Weekly client reports">Weekly client reports</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="New client onboarding setup">New client onboarding setup</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Timesheets → invoices">Timesheets → invoices</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Building proposals">Building proposals</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Meeting notes → tasks">Meeting notes → tasks</button>
+            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Lead follow-up & CRM updates">Lead follow-up &amp; CRM updates</button>
             <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Copying data between tools">Copying data between tools</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Updating status across platforms">Updating status across platforms</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Manual follow-up emails">Manual follow-up emails</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Formatting & sending reports">Formatting & sending reports</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Social media scheduling">Social media scheduling</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Invoice processing & tracking">Invoice processing & tracking</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Meeting notes & task assignment">Meeting notes & task assignment</button>
-            <button class="preset-btn text-left px-3.5 py-2.5 rounded-md bg-[#44403C] text-[#E7E5E4] hover:bg-[#4A6741] hover:text-white transition-all text-[13px] cursor-pointer" data-task="Lead follow-up & CRM updates">Lead follow-up & CRM updates</button>
           </div>
           <div class="mt-3.5 pt-3.5 border-t border-[#44403C]">
             <input
@@ -297,10 +296,12 @@ const faqSchema = {
 
           <a
             href="#contact"
+            id="calcCta"
             class="mt-5 block w-full bg-[#4A6741] text-white font-semibold px-6 py-3.5 rounded-md hover:bg-[#3A5233] transition-colors text-center text-[13px]"
           >
-            Let's automate one of these →
+            Book your free bottleneck call →
           </a>
+          <p class="text-[12px] text-[#78716C] mt-2 text-center">Your tasks and hours come with you, so we skip the basics on the call.</p>
         </div>
       </div>
     </section>
@@ -309,23 +310,23 @@ const faqSchema = {
     <section id="work" class="border-b border-[#E7E5E4] py-20">
       <div class="max-w-[1000px] mx-auto px-7">
         <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Recent Work</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-12">Real projects. Real outcomes.</h2>
+        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-12">Things I've built for real teams.</h2>
 
         <div class="grid sm:grid-cols-2 gap-5">
-          <!-- Featured: Lewis Howes -->
+          <!-- Featured: Formation -->
           <div class="scroll-fade sm:col-span-2 border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Workflow Automation</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Post-Production Automation — Lewis Howes / School of Greatness</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Faster turnaround, zero added headcount</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Automates the manual steps between recording and publish-ready files for a top global podcast. Keeps pace with weekly publishing without growing the team.</p>
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Operations Overhaul · Consulting Firm</p>
+            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Five tools into one system — Formation Consulting</h3>
+            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">~15 hrs/week saved, ~$21k/year (estimated)</span>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Replaced Monday.com, Harvest, budget spreadsheets and manual invoicing with a single integrated system. Project financials, sub-contractor budgets and workflows now run from pipeline through closeout without re-entry.</p>
           </div>
 
-          <!-- Formation -->
+          <!-- Lewis Howes -->
           <div class="scroll-fade border border-[#E7E5E4] rounded-[10px] p-7 bg-[#FAFAF9] hover:border-[#4A6741] transition-all" style="animation-delay: 80ms">
-            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Operations Overhaul</p>
-            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Full-Stack Operations Consolidation — Formation Consulting</h3>
-            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">5+ tools → 1 platform, 15 hrs/week saved</span>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Replaces Monday.com, Harvest, budget spreadsheets, and manual invoicing with a single integrated system. Tracks project financials, sub-contractor budgets, and workflows from pipeline through closeout.</p>
+            <p class="text-[11px] font-bold tracking-[2px] uppercase text-[#4A6741] mb-2">Workflow Automation</p>
+            <h3 class="text-[17px] font-bold tracking-[-0.3px] mb-2">Post-Production Automation — School of Greatness</h3>
+            <span class="inline-block bg-[#E8EDE6] text-[#3A5233] text-[12px] font-semibold px-2.5 py-0.5 rounded mb-2.5">Faster turnaround, zero added headcount</span>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Automates the manual steps between recording and publish-ready files for Lewis Howes' top global podcast. Keeps pace with weekly publishing without growing the team.</p>
           </div>
 
           <!-- JJ Virgin -->
@@ -364,18 +365,18 @@ const faqSchema = {
         <div class="grid sm:grid-cols-3 gap-10">
           <div class="scroll-fade">
             <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">1</div>
-            <h3 class="text-[16px] font-bold mb-1.5">Free Consultation</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">We talk about what's costing you time or leads. I'll be honest about whether I can help.</p>
+            <h3 class="text-[16px] font-bold mb-1.5">Free bottleneck call</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">30 minutes on where your team's week goes. If I can't help, I'll say so on the call.</p>
           </div>
           <div class="scroll-fade" style="animation-delay: 100ms">
             <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">2</div>
-            <h3 class="text-[16px] font-bold mb-1.5">Scope & Build</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Fixed price, clear deliverable. Most projects have something working within a week.</p>
+            <h3 class="text-[16px] font-bold mb-1.5">One-page plan, fixed price</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">Within 48 hours: the workflow to fix first, the hours it saves, the price. Say yes and it's live in about two weeks.</p>
           </div>
           <div class="scroll-fade" style="animation-delay: 200ms">
             <div class="w-9 h-9 rounded-full bg-[#1C1917] text-[#FAFAF9] flex items-center justify-center font-[800] text-[14px] mb-4">3</div>
-            <h3 class="text-[16px] font-bold mb-1.5">Launch & Own</h3>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">We ship, test, adjust. You own everything — no lock-in, no black box.</p>
+            <h3 class="text-[16px] font-bold mb-1.5">You own it</h3>
+            <p class="text-[13px] text-[#78716C] leading-relaxed">It runs in your accounts, with alerts if anything fails. Keep me on to maintain it, or don't. No lock-in.</p>
           </div>
         </div>
       </div>
@@ -384,9 +385,9 @@ const faqSchema = {
     <!-- ── CONTACT ── -->
     <section id="contact" class="border-b border-[#E7E5E4] py-20">
       <div class="max-w-[1000px] mx-auto px-7">
-        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Let's Talk</p>
-        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">What's costing you time?</h2>
-        <p class="text-[15px] text-[#78716C] mb-10">No pitch, no pressure. Just tell me what's broken.</p>
+        <p class="text-[12px] font-bold tracking-[2.5px] uppercase text-[#4A6741] mb-3">Free Bottleneck Call</p>
+        <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-2">Pick a time, or tell me what's broken.</h2>
+        <p class="text-[15px] text-[#78716C] mb-10">30 minutes, no pitch deck. You leave with a one-page plan and a fixed price within 48 hours.</p>
 
         <div class="grid sm:grid-cols-2 gap-8">
           <form
@@ -411,17 +412,18 @@ const faqSchema = {
               <select id="problem" name="problem"
                 class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12">
                 <option value="" disabled selected>Pick one...</option>
-                <option>Tools that don't talk to each other</option>
-                <option>Manual data entry / copy-paste</option>
-                <option>Leads not being followed up</option>
-                <option>Need a landing page or funnel</option>
-                <option>General workflow chaos</option>
+                <option>Status updates across tools</option>
+                <option>Client reporting</option>
+                <option>Client onboarding</option>
+                <option>Timesheets, budgets and invoicing</option>
+                <option>Proposals</option>
+                <option>Leads not followed up</option>
                 <option>Something else</option>
               </select>
             </div>
             <div>
               <label for="details" class="block text-[13px] font-semibold text-[#44403C] mb-1.5">Anything else? (optional)</label>
-              <textarea id="details" name="details" rows="3" placeholder="What tools do you use? What's the most painful part?"
+              <textarea id="details" name="details" rows="3" placeholder="How big is the team? Which tools? What's the most painful part?"
                 class="w-full rounded-md border border-[#D6D3D1] bg-[#FAFAF9] px-3 py-2.5 text-[13px] text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#4A6741] focus:ring-2 focus:ring-[#4A6741]/12 resize-none"></textarea>
             </div>
             <button type="submit" class="w-full bg-[#1C1917] text-[#FAFAF9] font-semibold px-6 py-3 rounded-md hover:bg-[#44403C] transition-colors text-[14px]">
@@ -433,37 +435,24 @@ const faqSchema = {
           <div class="calendly-inline-widget rounded-xl overflow-hidden"
                data-url="https://calendly.com/scottmcfall/30min"
                style="min-width:280px;height:700px;"></div>
+          <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
       </div>
     </section>
 
     <!-- ── FAQ ── -->
-    <section class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
+    <section id="faq" class="bg-[#F5F5F4] border-b border-[#E7E5E4] py-20">
       <div class="max-w-[720px] mx-auto px-7">
         <h2 class="text-[36px] font-[800] tracking-[-1px] text-[#1C1917] mb-9">FAQ</h2>
 
-        <div class="divide-y divide-[#E7E5E4] border-t border-[#E7E5E4]">
-          <div class="py-[18px]">
-            <p class="text-[14px] font-bold mb-1.5">What does this cost?</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Most projects are $500–$2,000. Fixed price upfront — no hourly surprises.</p>
-          </div>
-          <div class="py-[18px]">
-            <p class="text-[14px] font-bold mb-1.5">I'm not technical. Problem?</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Nope. Most of my clients aren't. You know your business — I handle the tech.</p>
-          </div>
-          <div class="py-[18px]">
-            <p class="text-[14px] font-bold mb-1.5">What tools can you connect?</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Monday, Asana, Slack, Google Workspace, HubSpot, Mailchimp, Calendly, Stripe, Airtable, Notion — if it has an API, I can probably connect it.</p>
-          </div>
-          <div class="py-[18px]">
-            <p class="text-[14px] font-bold mb-1.5">How fast?</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Something working within a week. Full launch in 2–4 weeks.</p>
-          </div>
-          <div class="py-[18px] border-b border-[#E7E5E4]">
-            <p class="text-[14px] font-bold mb-1.5">Can I maintain it after?</p>
-            <p class="text-[13px] text-[#78716C] leading-relaxed">Yes. You own it, understand it, and can adjust it. Ongoing support available if you want it.</p>
-          </div>
+        <div class="divide-y divide-[#E7E5E4] border-y border-[#E7E5E4]">
+          {faqs.map((f) => (
+            <div class="py-[18px]">
+              <h3 class="text-[14px] font-bold mb-1.5">{f.q}</h3>
+              <p class="text-[13px] text-[#78716C] leading-relaxed">{f.a}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -625,5 +614,29 @@ const faqSchema = {
 
     hourlyRateInput.addEventListener('input', calculate);
     timeHorizonSelect.addEventListener('change', calculate);
+
+    // Hand the calculator results to the booking step
+    const CALENDLY_URL = 'https://calendly.com/scottmcfall/30min';
+
+    function calcSummary() {
+      const rate = parseFloat(hourlyRateInput.value) || 0;
+      const total = tasks.reduce((sum, t) => sum + t.hours, 0);
+      const list = tasks.map(t => `${t.name} (${t.hours} hrs/wk)`).join('; ');
+      const annual = Math.round(total * 52 * rate).toLocaleString('en-US');
+      return `From the calculator: ${list}. Total ${total} hrs/week at $${rate}/hr, about $${annual}/year.`;
+    }
+
+    document.getElementById('calcCta')!.addEventListener('click', (e) => {
+      const summary = calcSummary();
+      const details = document.getElementById('details') as HTMLTextAreaElement | null;
+      if (details && !details.value.includes('From the calculator')) {
+        details.value = details.value ? details.value + ' ' + summary : summary;
+      }
+      const cal = (window as any).Calendly;
+      if (cal && typeof cal.initPopupWidget === 'function') {
+        e.preventDefault();
+        cal.initPopupWidget({ url: `${CALENDLY_URL}?a1=${encodeURIComponent(summary)}` });
+      }
+    });
   </script>
 </Layout>

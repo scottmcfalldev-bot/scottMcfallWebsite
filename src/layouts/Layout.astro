@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Scott McFall — Workflow & Growth Consultant for Small Teams",
-  description = "I connect your tools, automate the busywork, and build landing pages that capture leads. Integrations, automation, and funnels for small teams.",
+  title = "Scott McFall — Workflow Automation for Small Agencies",
+  description = "For agencies and consulting firms with 5–30 people: I automate the status updates, onboarding, reporting and invoicing your team does by hand. Free bottleneck call, fixed-price builds.",
   ogImage = "/profile.svg",
 } = Astro.props;
 
@@ -25,9 +25,9 @@ const jsonLd = {
   founder: {
     "@type": "Person",
     name: "Scott McFall",
-    jobTitle: "Workflow & Growth Consultant",
+    jobTitle: "Workflow Automation for Small Agencies",
   },
-  serviceType: ["Workflow Automation", "Business Integrations", "Landing Page Development", "Lead Funnel Optimization"],
+  serviceType: ["Workflow Automation", "Business Integrations", "Agency Operations Automation", "AI Automation"],
   areaServed: "US",
   sameAs: [
     "https://github.com/scottmcfalldev-bot",
@@ -57,14 +57,14 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:alt" content="Scott McFall — Workflow & Growth Consultant for Small Teams" />
+    <meta property="og:image:alt" content="Scott McFall — Workflow Automation for Small Agencies" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
-    <meta name="twitter:image:alt" content="Scott McFall — Workflow & Growth Consultant for Small Teams" />
+    <meta name="twitter:image:alt" content="Scott McFall — Workflow Automation for Small Agencies" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
