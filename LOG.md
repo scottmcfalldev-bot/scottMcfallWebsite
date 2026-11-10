@@ -1,5 +1,10 @@
 # LOG
 
+## 2026-11-10 · New Calendly link
+- **Done:** booking calendar and the calculator's booking popup now use `calendly.com/scott-scottmcfall/30min` (was `scottmcfall/30min`). Checked both open the new event; no Calendly settings changed.
+- **Next (Scott):** in Calendly, rename "30 Minute Meeting" to "Free call" and add a first custom question so calculator results show on bookings.
+- **Waiting on:** Scott: OK to push to PR #1.
+
 ## 2026-11-10 · Shorter, punchier copy + photo in hero
 - **Done:** new headline "Stop doing the same work twice." with Scott's photo to the right (`public/scott.jpg`); one-line subhead; every section heading and line cut down (offer, calculator, 14 work rows, booking, FAQ). Modelled on fearlessorganizationscan.com's short hero. Pushed to PR #1; preview link updated. Build passes; checked desktop and 375px.
 - **Done (later):** removed AI mentions (FAQ, schema). Calculator moved down to just above booking. Booking now leads with the Calendly calendar; the form is a small "Not ready to book? Send a note." box beside it.

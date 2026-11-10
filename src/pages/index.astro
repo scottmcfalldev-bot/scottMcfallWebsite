@@ -201,7 +201,7 @@ const filters = [
       <h2 data-r>Book a free call</h2>
       <p class="soft sub" data-r>30 minutes. A plan and a fixed price in 48 hours.</p>
       <div class="book" data-r>
-        <div class="calendly-inline-widget cal" data-url="https://calendly.com/scottmcfall/30min?hide_gdpr_banner=1"></div>
+        <div class="calendly-inline-widget cal" data-url="https://calendly.com/scott-scottmcfall/30min?hide_gdpr_banner=1"></div>
         <form action="https://formspree.io/f/xwvnnpoy" method="POST" class="form">
           <p class="form__head">Not ready to book? Send a note.</p>
           <div><label for="name">Name</label><input id="name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name" /></div>
@@ -436,7 +436,7 @@ const filters = [
     }
 
     // ── Calculator → booking ──
-    const CALENDLY_URL = 'https://calendly.com/scottmcfall/30min';
+    const CALENDLY_URL = 'https://calendly.com/scott-scottmcfall/30min';
     $('calcCta').addEventListener('click', (e) => {
       const r = parseFloat(rate.value) || 0;
       const weekly = tasks.reduce((s, t) => s + t.hours, 0);
