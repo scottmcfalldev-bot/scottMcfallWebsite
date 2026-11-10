@@ -1,5 +1,10 @@
 # LOG
 
+## 2026-11-10 · Pricing research for automation builds
+- **Done:** Scott flagged that the site reads as one flat $2,500 for any build. That number was an unresearched ballpark from the 9 Nov plan. Researched market rates: an invoice-based rate card (54 operators, Jan–Jun 2026) puts intermediate builders at about $90–155/hr, simple flat-fee builds at $650–1,800, multi-step at $1,800–8,500, big rebuilds $8,500+, and "care" retainers at $650–1,200/mo. Agency guides put small-business setups at $1,500–5,000 per workflow. Recommended sized fixed quotes: Small $1,500–2,500, Standard $2,500–5,000, Large $5,000+ or phased. Each quote is estimated hours × ~$125 + 30% buffer, with written scope and changes priced separately. Keep $750/mo; founding offer becomes 40% off.
+- **Done (later):** Scott approved. Site now says "First automation: From $1,500 … most run $1,500 to $5,000, fixed quote"; founding offer is 40% off the first build; FAQ cost and timing answers and the hero line match (`src/pages/index.astro`). Build passes; pricing section checked in the browser. Scott Social email in the tracker now says 40% off.
+- **Waiting on:** Scott: OK to commit and push (updates PR #1).
+
 ## 2026-11-10 · First prospect list for automation services
 - **Done:** Test batch of 12 small agencies/consulting firms (8–16 people) matching the plan's buyer, in `prospects/automation-prospects-2026-11-10.csv` (fit score, owner, signals seen on their site, first automation to pitch, opener). Every company's own site was fetched; I re-checked 5 of them myself. `prospects/` is gitignored because this repo is public. Top fits: Demo Duck, The Media Captain, Fresh Content Society.
 - **Waiting on:** Scott: judge whether the list is good enough to repeat weekly.
@@ -11,6 +16,7 @@
 - **Ideas:** opener hooks found: Triangle2's team-page email link goes to their web designer; Demo Duck and Wienot Films hire VO talent.
 
 ## 2026-11-10 · New Calendly link
+- **Done:** headings switched to Manrope; demo video now swaps wide/phone cut on resize (was staying tall on desktop). Live via PR #3, deploy c5554e6 checked. The local log commit b3e0e80 was left out on purpose (adds prospect detail to the public repo).
 - **Done:** demo video's example client renamed from Acme to McFall Prod (both cuts re-rendered).
 - **Done:** new design live on scottmcfall.com. PR #1 merged 4:29 pm; PR #2 (building background, smaller animation, log) merged after, deploy 3622c36 succeeded and live site checked. Closes "Lauren: review PR #1" and "OK to merge".
 - **Done:** faded black-and-white brick building behind the hero, down to the strand band (`public/hero-building.webp`, 146 KB; photo by Nick Wood, free Unsplash license, unsplash.com/photos/zvMu2ypehHM).
