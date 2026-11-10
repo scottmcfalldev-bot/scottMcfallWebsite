@@ -84,6 +84,7 @@ const filters = [
 
   <main id="top">
     <!-- HERO -->
+    <div class="hero-bg">
     <section class="hero wrap">
       <div class="hero__top">
         <div class="hero__head hero__copy">
@@ -115,6 +116,7 @@ const filters = [
         <figcaption>One update, typed once, lands in five tools. <button type="button" id="demoToggle" class="link" hidden>Pause</button></figcaption>
       </figure>
     </section>
+    </div>
 
     <!-- FLOW BAND: five strands become one -->
     <div class="flow" aria-hidden="true">
@@ -491,6 +493,10 @@ const filters = [
   .bar nav a:hover { color: var(--ink); }
 
   /* hero */
+  /* faded building behind the hero; flipped so the open sky sits behind the headline */
+  .hero-bg { position: relative; isolation: isolate; overflow: hidden; }
+  .hero-bg::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url(/hero-building.webp) 50% 35% / cover no-repeat; transform: scaleX(-1); opacity: 0.2; }
+  .hero-bg::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to right, var(--bg) 0%, rgb(246 245 242 / 0.55) 40%, rgb(246 245 242 / 0) 70%), linear-gradient(to bottom, rgb(246 245 242 / 0) 55%, rgb(246 245 242 / 0.7) 100%); }
   .hero { padding-block: clamp(1.5rem, 3.5vw, 2.5rem) 1.25rem; }
   .hero__top { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "head me" "body me"; column-gap: clamp(1rem, 5vw, 4rem); align-items: end; margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
   .hero__head { grid-area: head; } .hero__body { grid-area: body; align-self: start; }
