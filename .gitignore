@@ -28,3 +28,4 @@ pnpm-debug.log*
 
 # scroll-craft test harness output
 scrollcraft/lab/
+scripts/demo-video/.frames/
