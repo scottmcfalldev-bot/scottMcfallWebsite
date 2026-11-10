@@ -2,7 +2,8 @@
 
 ## 2026-11-10 · New Calendly link
 - **Done:** booking calendar and the calculator's booking popup now use `calendly.com/scott-scottmcfall/30min` (was `scottmcfall/30min`). Checked both open the new event; no Calendly settings changed.
-- **Next (Scott):** in Calendly, rename "30 Minute Meeting" to "Free call" and add a first custom question so calculator results show on bookings.
+- **Done:** Calendly event Question 1 reworded to "What's eating your team's week?" (multi-line, optional). Tested: the calculator summary pre-fills it. Closes the old "add a custom question" item.
+- **Next (Scott):** optionally rename the event "30 Minute Meeting" to "Free call".
 - **Waiting on:** Scott: OK to push to PR #1.
 
 ## 2026-11-10 · Shorter, punchier copy + photo in hero
