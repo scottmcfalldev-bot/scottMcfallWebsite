@@ -1,5 +1,13 @@
 # LOG
 
+## 2026-11-10 · First prospect list for automation services
+- **Done:** Test batch of 12 small agencies/consulting firms (8–16 people) matching the plan's buyer, in `prospects/automation-prospects-2026-11-10.csv` (fit score, owner, signals seen on their site, first automation to pitch, opener). Every company's own site was fetched; I re-checked 5 of them myself. `prospects/` is gitignored because this repo is public. Top fits: Demo Duck, The Media Captain, Fresh Content Society.
+- **Waiting on:** Scott: judge whether the list is good enough to repeat weekly.
+- **Done (later):** Moved tracking to the Google Sheet [Scott Automation Consult](https://docs.google.com/spreadsheets/d/1QLoW0hzoEG2urPkLEU20rh1cgzm4arNYDuFhcNZhHUk/edit): "Prospects" tab (status, contact, signals, before-you-reach-out steps, humanized cold email per prospect, date sent, auto follow-up date that turns red when due) and a "Before you send" checklist (site check, Calendly question, CAN-SPAM signature, send ~10/day by hand, LinkedIn mutuals first). Nothing sent. The sheet is now the tracker; the CSV is the original snapshot.
+- **Waiting on:** Scott: find contact emails, work the checklist, send. Epipheo needs a contact name before sending.
+- **Next:** if yes, set up a weekly scheduled run that adds 10 more to Asana (Asana connector needs re-authorizing via /mcp). Cold list is a supplement; the warm 50-name list still comes first.
+- **Ideas:** opener hooks found: Triangle2's team-page email link goes to their web designer; Demo Duck and Wienot Films hire VO talent.
+
 ## 2026-11-10 · New Calendly link
 - **Done:** booking calendar and the calculator's booking popup now use `calendly.com/scott-scottmcfall/30min` (was `scottmcfall/30min`). Checked both open the new event; no Calendly settings changed.
 - **Done:** Calendly event Question 1 reworded to "What's eating your team's week?" (multi-line, optional). Tested: the calculator summary pre-fills it. Closes the old "add a custom question" item.
