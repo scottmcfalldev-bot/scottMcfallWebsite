@@ -100,16 +100,16 @@ const filters = [
         </div>
       </div>
       <figure class="hero__video">
-        <video id="demo" muted loop playsinline preload="metadata" poster="/demo-poster.jpg?v=3" width="1920" height="768"
+        <video id="demo" muted loop playsinline preload="metadata" poster="/demo-poster.jpg?v=4" width="1920" height="768"
           aria-label="Animation: one new-client update is typed once, then lands in an Asana task, a Slack channel, a client email, a budget sheet and a CRM note.">
-          <source src="/demo-m.mp4?v=3" type="video/mp4" media="(max-width: 640px)" />
-          <source src="/demo.mp4?v=3" type="video/mp4" />
+          <source src="/demo-m.mp4?v=4" type="video/mp4" media="(max-width: 640px)" />
+          <source src="/demo.mp4?v=4" type="video/mp4" />
         </video>
         <script is:inline>
           // Phones get the taller cut, so its poster and shape have to match.
           if (matchMedia('(max-width: 640px)').matches) {
             var v = document.getElementById('demo');
-            v.poster = '/demo-m-poster.jpg?v=3'; v.width = 1080; v.height = 1620;
+            v.poster = '/demo-m-poster.jpg?v=4'; v.width = 1080; v.height = 1620;
           }
         </script>
         <figcaption>One update, typed once, lands in five tools. <button type="button" id="demoToggle" class="link" hidden>Pause</button></figcaption>

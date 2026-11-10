@@ -20,11 +20,11 @@ const L = PORTRAIT ? {
   nameSize: 21, wroteSize: 17, trunkX: 56,
 } : {
   W: 1600, H: 640, S: 1.2,
-  card: { x: 70, y: 96, w: 480, h: 290 },
+  card: { x: 70, y: 76, w: 480, h: 330 },
   dot: [38, 44], label: [56, 50], labelSize: 16,
   msgSize: 31, msgX: 32, msgY: 110, msgLH: 44, cursorH: 34,
   btn: { w: 168, h: 52, x: 32, fromBottom: 84, size: 19 },
-  cap: { x: 70, y1: 96 + 290 + 78, y2: 96 + 290 + 122, size: 34 },
+  cap: { x: 70, y1: 76 + 330 + 74, y2: 76 + 330 + 118, size: 34 },
   chips: { x: 1000, w: 530, h: 92, gap: 14, y0: (640 - (5 * 92 + 4 * 14)) / 2 },
   nameSize: 21, wroteSize: 17,
 };
@@ -37,14 +37,14 @@ const clamp = (v) => Math.min(1, Math.max(0, v));
 const seg = (t, a, b) => clamp((t - a) / (b - a));
 const io = (t) => { t = clamp(t); return t * t * (3 - 2 * t); };
 const out = (t) => 1 - Math.pow(1 - clamp(t), 3);
-const MSG = 'Acme signed the contract. Onboarding starts Monday.';
+const MSG = 'McFall Prod signed the contract. Onboarding starts Monday.';
 // Same five colours as the strand animation on the page.
 const DESTS = [
-  { name: 'Asana task',           glyph: 'A', color: '#C2643F', wrote: 'Acme onboarding project created · kickoff Mon' },
-  { name: 'Slack · #client-acme', glyph: '#', color: '#C99A2E', wrote: 'New client: Acme signed. Kickoff Monday.' },
-  { name: 'Client email',         glyph: '@', color: '#4F6D8F', wrote: 'Subject: Welcome aboard, Acme' },
-  { name: 'Budget sheet',         glyph: '$', color: '#8A5A7A', wrote: 'Acme added · billing starts Monday' },
-  { name: 'CRM note',             glyph: 'C', color: '#3F8A8A', wrote: 'Acme: deal won, onboarding started' },
+  { name: 'Asana task',           glyph: 'A', color: '#C2643F', wrote: 'McFall Prod onboarding project · kickoff Mon' },
+  { name: 'Slack · #client-mcfall', glyph: '#', color: '#C99A2E', wrote: 'New client: McFall Prod. Kickoff Monday.' },
+  { name: 'Client email',         glyph: '@', color: '#4F6D8F', wrote: 'Subject: Welcome aboard, McFall Prod' },
+  { name: 'Budget sheet',         glyph: '$', color: '#8A5A7A', wrote: 'McFall Prod added · billing starts Mon' },
+  { name: 'CRM note',             glyph: 'C', color: '#3F8A8A', wrote: 'McFall Prod: deal won, onboarding started' },
 ];
 
 function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
