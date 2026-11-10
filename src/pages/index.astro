@@ -100,16 +100,16 @@ const filters = [
         </div>
       </div>
       <figure class="hero__video">
-        <video id="demo" muted loop playsinline preload="metadata" poster="/demo-poster.jpg" width="1920" height="768"
-          aria-label="Animation: one status update is typed once, then lands in an Asana task, a Slack channel, a client email, a budget sheet and a CRM note.">
-          <source src="/demo-m.mp4" type="video/mp4" media="(max-width: 640px)" />
-          <source src="/demo.mp4?v=2" type="video/mp4" />
+        <video id="demo" muted loop playsinline preload="metadata" poster="/demo-poster.jpg?v=3" width="1920" height="768"
+          aria-label="Animation: one new-client update is typed once, then lands in an Asana task, a Slack channel, a client email, a budget sheet and a CRM note.">
+          <source src="/demo-m.mp4?v=3" type="video/mp4" media="(max-width: 640px)" />
+          <source src="/demo.mp4?v=3" type="video/mp4" />
         </video>
         <script is:inline>
           // Phones get the taller cut, so its poster and shape have to match.
           if (matchMedia('(max-width: 640px)').matches) {
             var v = document.getElementById('demo');
-            v.poster = '/demo-m-poster.jpg'; v.width = 1080; v.height = 1620;
+            v.poster = '/demo-m-poster.jpg?v=3'; v.width = 1080; v.height = 1620;
           }
         </script>
         <figcaption>One update, typed once, lands in five tools. <button type="button" id="demoToggle" class="link" hidden>Pause</button></figcaption>
@@ -119,7 +119,7 @@ const filters = [
     <!-- FLOW BAND: five strands become one -->
     <div class="flow" aria-hidden="true">
       <canvas id="flow"></canvas>
-      <div class="wrap flow__labels"><span>Five tools, typed by hand</span><span>One update, sent once</span></div>
+      <div class="wrap flow__labels"><span>Before: typed into five tools</span><span>After: typed once</span></div>
     </div>
 
     <p class="trust wrap">Built for <strong>Lewis Howes</strong>, <strong>JJ Virgin</strong> and <strong>Formation Consulting</strong>.</p>
