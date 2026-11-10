@@ -107,11 +107,23 @@ const filters = [
           <source src="/demo.mp4?v=4" type="video/mp4" />
         </video>
         <script is:inline>
-          // Phones get the taller cut, so its poster and shape have to match.
-          if (matchMedia('(max-width: 640px)').matches) {
-            var v = document.getElementById('demo');
-            v.poster = '/demo-m-poster.jpg?v=4'; v.width = 1080; v.height = 1620;
-          }
+          // Phones get the taller cut. Re-checked on resize so a window that
+          // changes size never keeps the wrong shape.
+          (function () {
+            var v = document.getElementById('demo'), mq = matchMedia('(max-width: 640px)');
+            function fit() {
+              var m = mq.matches, src = m ? '/demo-m.mp4?v=4' : '/demo.mp4?v=4';
+              v.poster = m ? '/demo-m-poster.jpg?v=4' : '/demo-poster.jpg?v=4';
+              v.width = m ? 1080 : 1920; v.height = m ? 1620 : 768;
+              if (v.getAttribute('src') !== src) {
+                var playing = !v.paused;
+                v.src = src; v.load();
+                if (playing) v.play().catch(function () {});
+              }
+            }
+            fit();
+            mq.addEventListener('change', fit);
+          })();
         </script>
         <figcaption>One update, typed once, lands in five tools. <button type="button" id="demoToggle" class="link" hidden>Pause</button></figcaption>
       </figure>
