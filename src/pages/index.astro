@@ -107,11 +107,23 @@ const filters = [
           <source src="/demo.mp4?v=4" type="video/mp4" />
         </video>
         <script is:inline>
-          // Phones get the taller cut, so its poster and shape have to match.
-          if (matchMedia('(max-width: 640px)').matches) {
-            var v = document.getElementById('demo');
-            v.poster = '/demo-m-poster.jpg?v=4'; v.width = 1080; v.height = 1620;
-          }
+          // Phones get the taller cut. Re-checked on resize so a window that
+          // changes size never keeps the wrong shape.
+          (function () {
+            var v = document.getElementById('demo'), mq = matchMedia('(max-width: 640px)');
+            function fit() {
+              var m = mq.matches, src = m ? '/demo-m.mp4?v=4' : '/demo.mp4?v=4';
+              v.poster = m ? '/demo-m-poster.jpg?v=4' : '/demo-poster.jpg?v=4';
+              v.width = m ? 1080 : 1920; v.height = m ? 1620 : 768;
+              if (v.getAttribute('src') !== src) {
+                var playing = !v.paused;
+                v.src = src; v.load();
+                if (playing) v.play().catch(function () {});
+              }
+            }
+            fit();
+            mq.addEventListener('change', fit);
+          })();
         </script>
         <figcaption>One update, typed once, lands in five tools. <button type="button" id="demoToggle" class="link" hidden>Pause</button></figcaption>
       </figure>
@@ -458,7 +470,7 @@ const filters = [
   :root {
     --bg: #F6F5F2; --card: #FFFFFF; --ink: #1C1917; --soft: #5F5953; --line: #DEDAD4;
     --green: #3F6B4F; --green-dark: #33573F; --green-tint: #E9EFEA;
-    --display: "Archivo", system-ui, sans-serif; --text: "Geist", system-ui, sans-serif;
+    --display: "Manrope", system-ui, sans-serif; --text: "Geist", system-ui, sans-serif;
     --ease: cubic-bezier(0.23, 1, 0.32, 1);
   }
   html { scroll-padding-top: 4.5rem; }
@@ -468,7 +480,7 @@ const filters = [
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 66rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2rem); }
   .soft { color: var(--soft); } .small { font-size: 0.85rem; }
-  h1, h2 { font-family: var(--display); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: 0; text-wrap: balance; }
+  h1, h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin: 0; text-wrap: balance; }
   h2 { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem); }
   .link { color: var(--green-dark); font-weight: 600; text-underline-offset: 0.2em; text-decoration-thickness: 1px; background: none; border: 0; padding: 0; font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
 
@@ -487,7 +499,7 @@ const filters = [
   /* bar */
   .bar { position: sticky; top: 0; z-index: 20; background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
   .bar__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.6rem; }
-  .mark { font-family: var(--display); font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+  .mark { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
   .bar nav { display: flex; gap: 1.5rem; font-size: 0.85rem; }
   .bar nav a { color: var(--soft); text-decoration: none; transition: color 150ms var(--ease); }
   .bar nav a:hover { color: var(--ink); }
@@ -534,7 +546,7 @@ const filters = [
   .ledger li { display: grid; grid-template-columns: 11rem 1fr auto; gap: 1.25rem; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
   .ledger__name { font-weight: 600; }
   .ledger__what { color: var(--soft); font-size: 0.92rem; }
-  .ledger__price { font-family: var(--display); font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .ledger__price { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
   .note { margin: 0.9rem 0 0; font-size: 0.9rem; color: var(--soft); background: var(--green-tint); border-radius: 8px; padding: 0.7rem 0.9rem; }
   .note strong { color: var(--ink); }
 
@@ -545,7 +557,7 @@ const filters = [
   .calc__out .soft { color: #B5AEA6; }
   .rate { display: flex; align-items: baseline; gap: 0.4rem; color: var(--soft); }
   .rate label { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-right: 0.5rem; }
-  .rate input { width: 4.5ch; font-family: var(--display); font-weight: 800; font-size: 1.4rem; background: transparent; border: 0; border-bottom: 2px solid var(--ink); color: var(--ink); padding: 0; }
+  .rate input { width: 4.5ch; font-family: var(--display); font-weight: 700; font-size: 1.4rem; background: transparent; border: 0; border-bottom: 2px solid var(--ink); color: var(--ink); padding: 0; }
   .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .chip { font-size: 0.8rem; padding: 0.45em 0.8em; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; transition: border-color 140ms var(--ease), background-color 140ms var(--ease), opacity 140ms; }
   .chip:hover { border-color: var(--ink); }
@@ -561,10 +573,10 @@ const filters = [
   .tasks button:hover { color: #9B2C1F; }
   .calc__out dl { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0 0 0.9rem; }
   .calc__out dt { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #B5AEA6; }
-  .calc__out dd { margin: 0.15rem 0 0; font-family: var(--display); font-weight: 800; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+  .calc__out dd { margin: 0.15rem 0 0; font-family: var(--display); font-weight: 700; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
   .calc__out select { background: #2B2724; color: #F6F5F2; border: 1px solid #4A4540; border-radius: 6px; padding: 0.1em 0.3em; font: inherit; }
   .calc__out p { margin: 0; }
-  .big { font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3rem); letter-spacing: -0.03em; line-height: 1.1; color: #A9D3B5; font-variant-numeric: tabular-nums; margin: 0.2rem 0 !important; }
+  .big { font-family: var(--display); font-weight: 700; font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3rem); letter-spacing: -0.03em; line-height: 1.1; color: #A9D3B5; font-variant-numeric: tabular-nums; margin: 0.2rem 0 !important; }
   .calc__out .btn { background: #F6F5F2; color: var(--ink); border-color: #F6F5F2; margin-block: 0.9rem 0.5rem; }
   @media (hover: hover) and (pointer: fine) { .calc__out .btn:hover { background: #A9D3B5; border-color: #A9D3B5; color: var(--ink); } }
 
