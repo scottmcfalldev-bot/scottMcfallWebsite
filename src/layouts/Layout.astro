@@ -27,7 +27,7 @@ const jsonLd = {
     name: "Scott McFall",
     jobTitle: "Workflow Automation for Small Agencies",
   },
-  serviceType: ["Workflow Automation", "Business Integrations", "Agency Operations Automation", "AI Automation"],
+  serviceType: ["Workflow Automation", "Business Integrations", "Agency Operations Automation"],
   areaServed: "US",
   sameAs: [
     "https://github.com/scottmcfalldev-bot",
@@ -71,6 +71,13 @@ const jsonLd = {
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Geist:wght@400;500;600&display=swap" />
+
+    <slot name="head" />
 
   </head>
   <body>
