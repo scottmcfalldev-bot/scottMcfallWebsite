@@ -74,8 +74,8 @@ const filters = [
       <a href="#top" class="mark">Scott McFall</a>
       <nav aria-label="Main navigation">
         <a href="#offer">Pricing</a>
-        <a href="#calculator">Calculator</a>
         <a href="#work">Work</a>
+        <a href="#calculator">Calculator</a>
         <a href="#faq">FAQ</a>
       </nav>
       <a href="#book" class="btn btn--sm">Book a free call</a>
@@ -139,6 +139,23 @@ const filters = [
       <p class="note" data-r><strong>First 3 clients:</strong> $1,500 instead of $2,500, for a short case study. <a href="#book" class="link">Claim a spot</a></p>
     </section>
 
+    <!-- WORK -->
+    <section id="work" class="wrap sec">
+      <h2 data-r>Things I've built</h2>
+      <div class="filts" role="group" aria-label="Filter the work list" data-r>
+        {filters.map((x) => (<button type="button" class="filt" data-f={x.f} aria-pressed="false">{x.label}</button>))}
+      </div>
+      <ul class="work" data-r>
+        {work.map((w) => (
+          <li id={`w-${w.id}`} data-cat={w.cat} data-top={w.top ? "1" : "0"} style={`view-transition-name: w-${w.id}`}>
+            <span class="work__title">{w.title}</span>
+            <span class="work__what">{w.what}</span>
+            <span class="work__tag">{w.tag}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
     <!-- CALCULATOR -->
     <section id="calculator" class="wrap sec">
       <h2 data-r>What's busywork costing you?</h2>
@@ -179,53 +196,22 @@ const filters = [
       </div>
     </section>
 
-    <!-- WORK -->
-    <section id="work" class="wrap sec">
-      <h2 data-r>Things I've built</h2>
-      <div class="filts" role="group" aria-label="Filter the work list" data-r>
-        {filters.map((x) => (<button type="button" class="filt" data-f={x.f} aria-pressed="false">{x.label}</button>))}
-      </div>
-      <ul class="work" data-r>
-        {work.map((w) => (
-          <li id={`w-${w.id}`} data-cat={w.cat} data-top={w.top ? "1" : "0"} style={`view-transition-name: w-${w.id}`}>
-            <span class="work__title">{w.title}</span>
-            <span class="work__what">{w.what}</span>
-            <span class="work__tag">{w.tag}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
     <!-- BOOK -->
     <section id="book" class="wrap sec">
       <h2 data-r>Book a free call</h2>
       <p class="soft sub" data-r>30 minutes. A plan and a fixed price in 48 hours.</p>
       <div class="book" data-r>
+        <div class="calendly-inline-widget cal" data-url="https://calendly.com/scottmcfall/30min?hide_gdpr_banner=1"></div>
         <form action="https://formspree.io/f/xwvnnpoy" method="POST" class="form">
-          <div class="form__pair">
-            <div><label for="name">Name</label><input id="name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name" /></div>
-            <div><label for="email">Email</label><input id="email" type="email" name="email" required placeholder="jane@company.com" autocomplete="email" /></div>
-          </div>
+          <p class="form__head">Not ready to book? Send a note.</p>
+          <div><label for="name">Name</label><input id="name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name" /></div>
+          <div><label for="email">Email</label><input id="email" type="email" name="email" required placeholder="jane@company.com" autocomplete="email" /></div>
           <div>
-            <label for="problem">Biggest time-waster right now?</label>
-            <select id="problem" name="problem">
-              <option value="" disabled selected>Pick one...</option>
-              <option>Status updates across tools</option>
-              <option>Client reporting</option>
-              <option>Client onboarding</option>
-              <option>Timesheets, budgets and invoicing</option>
-              <option>Proposals</option>
-              <option>Leads not followed up</option>
-              <option>Something else</option>
-            </select>
-          </div>
-          <div>
-            <label for="details">Anything else? (optional)</label>
+            <label for="details">What's eating your week?</label>
             <textarea id="details" name="details" rows="4" placeholder="Team size, tools, what hurts most"></textarea>
           </div>
-          <button type="submit" class="btn btn--block">Send message</button>
+          <button type="submit" class="btn btn--block btn--ghost">Send</button>
         </form>
-        <div class="calendly-inline-widget cal" data-url="https://calendly.com/scottmcfall/30min?hide_gdpr_banner=1"></div>
       </div>
     </section>
 
@@ -594,7 +580,8 @@ const filters = [
   .work__tag { font-size: 0.78rem; font-weight: 600; color: var(--green-dark); background: var(--green-tint); padding: 0.25em 0.65em; border-radius: 999px; white-space: nowrap; }
 
   /* book */
-  .book { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1.25rem; align-items: start; }
+  .book { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.25rem; align-items: start; }
+  .form__head { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.05rem; }
   .form { display: grid; gap: 0.8rem; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; }
   .form__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
   .form label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; }

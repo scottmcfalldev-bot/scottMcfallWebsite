@@ -2,7 +2,9 @@
 
 ## 2026-11-10 · Shorter, punchier copy + photo in hero
 - **Done:** new headline "Stop doing the same work twice." with Scott's photo to the right (`public/scott.jpg`); one-line subhead; every section heading and line cut down (offer, calculator, 14 work rows, booking, FAQ). Modelled on fearlessorganizationscan.com's short hero. Pushed to PR #1; preview link updated. Build passes; checked desktop and 375px.
-- **Waiting on:** Lauren: review PR #1 / preview. Scott: a higher-res photo (current one is 388x500, a little soft on retina screens).
+- **Done (later):** removed AI mentions (FAQ, schema). Calculator moved down to just above booking. Booking now leads with the Calendly calendar; the form is a small "Not ready to book? Send a note." box beside it.
+- **Next (Scott):** rename the Calendly event from "30 Minute Meeting" to "Free call" so it matches the page.
+- **Waiting on:** Lauren: review PR #1 / preview. Scott: OK to push the new commits to PR #1; a higher-res photo (current one is 388x500, a little soft on retina screens).
 
 ## 2026-11-09 · Minimal layout with motion and demo video
 - **Done:** Scott found the split-stage redesign had too much wasted space. Built a minimal, compact version on branch `minimal-motion` (not committed): about 3.4 screens tall on desktop instead of 11.9. Hero has a 10-second demo video (`public/demo.mp4`, 165 KB, rendered from code by `scripts/demo-video/render.mjs`) of one update landing in five tools; below it a live canvas band where five strands merge into one. Offer and work are tight ledgers, FAQ is an accordion, calculator numbers glide. Copy, prices, calculator → Calendly handoff and form kept. `npm run build` passes; checked desktop and phone.
