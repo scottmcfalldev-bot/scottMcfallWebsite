@@ -2,12 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 
 const faqs = [
-  { q: "What does it cost?", a: "The call is free. A first build is $2,500, half up front. Keep It Running is $750 a month. My first three clients get the build for $1,500 in return for a case study." },
+  { q: "What does it cost?", a: "The call is free. Every build gets its own fixed price, quoted after the call. Most first builds run $1,500 to $5,000, depending on how many tools and steps are involved, and bigger projects are split into phases. Half up front. Keep It Running is $750 a month. My first three clients get 40% off their first build in return for a case study." },
   { q: "Is my client data safe?", a: "I work inside your accounts with the least access needed and keep no copies. NDA on request." },
   { q: "What tools do you use?", a: "Whatever you already pay for. Zapier, Make, n8n or custom code, connected to Asana, Slack, Google, HubSpot, QuickBooks and most tools with an API." },
   { q: "What if it breaks?", a: "You get an alert, not a surprise. Fixes are free for 30 days. On Keep It Running, I fix it within one business day." },
   { q: "I'm not technical. Is that OK?", a: "Yes. You know where the time goes. I handle the tech and leave you a short guide." },
-  { q: "How fast?", a: "A plan within 48 hours of our call. Live in about two weeks." },
+  { q: "How fast?", a: "A plan and a fixed quote within 48 hours of our call. Most builds go live in two to three weeks." },
   { q: "Do you build anything else?", a: "Yes: lead-capture tools like calculators and quizzes, and small internal apps." },
 ];
 
@@ -34,7 +34,7 @@ const presets = [
 
 const offer = [
   { name: "Free call", what: "30 minutes on your week. A plan and a fixed price in 48 hours.", price: "Free" },
-  { name: "First automation", what: "One workflow, built and live in about two weeks.", price: "$2,500" },
+  { name: "First automation", what: "One workflow, scoped on our call. Most run $1,500 to $5,000. The quote is fixed, so no hourly surprises.", price: "From $1,500" },
   { name: "Keep it running", what: "Fixes, tweaks and one new automation a month. Optional.", price: "$750/mo" },
 ];
 
@@ -93,7 +93,7 @@ const filters = [
         </div>
         <img class="hero__me" src="/scott.jpg" alt="Scott McFall" width="388" height="500" fetchpriority="high" />
         <div class="hero__body hero__copy">
-          <p class="lede">I automate the busywork that eats your team's week. Fixed price, live in two weeks.</p>
+          <p class="lede">I automate the busywork that eats your team's week. You get a fixed quote before any work starts.</p>
           <div class="hero__cta">
             <a href="#book" class="btn">Book a free call</a>
             <a href="#offer" class="link">See pricing</a>
@@ -150,7 +150,7 @@ const filters = [
           </li>
         ))}
       </ol>
-      <p class="note" data-r><strong>First 3 clients:</strong> $1,500 instead of $2,500, for a short case study. <a href="#book" class="link">Claim a spot</a></p>
+      <p class="note" data-r><strong>First 3 clients:</strong> 40% off your first build, for a short case study. <a href="#book" class="link">Claim a spot</a></p>
     </section>
 
     <!-- WORK -->
