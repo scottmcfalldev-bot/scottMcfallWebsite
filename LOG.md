@@ -3,7 +3,8 @@
 ## 2026-11-12 · Calendly embed loading
 - **Found:** the slow booking box is Calendly's side: their booking app waits on its own `api/booking/initial_settings` call (sometimes never finishes in the in-app browser, even on calendly.com directly). Our page loads their script in under 10ms.
 - **Done:** `src/pages/index.astro`: preconnect to Calendly and widget.css moved into the head; the embed starts loading about a screen before the booking section; a calendar-shaped placeholder shows until the calendar has actually rendered (Calendly's `event_type_viewed`, or a `page_height` over 200px, with a 12s fallback); "Calendar slow to load? Open it in Calendly" link under the box. Build passes; checked in a local preview (calendar fades in, placeholder works, calculator popup still works).
-- **Waiting on:** Scott: OK to commit and push (branch `minimal-motion`).
+- **Done (later):** committed and pushed to `minimal-motion` (1d1f60d).
+- **Done (later):** merged to `main` (52920b6, Scott's OK); deploy passed and the live page has the placeholder and Calendly link.
 - **Ideas:** swap the inline embed for a "Pick a time" popup button if it's still slow for visitors.
 
 ## 2026-11-10 · Pricing research for automation builds
