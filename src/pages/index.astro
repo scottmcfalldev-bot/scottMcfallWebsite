@@ -66,6 +66,11 @@ const filters = [
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://assets.calendly.com" />
+    <link rel="preconnect" href="https://calendly.com" />
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+  </Fragment>
   <script is:inline>document.documentElement.classList.add('js');</script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
@@ -215,7 +220,16 @@ const filters = [
       <h2 data-r>Book a free call</h2>
       <p class="soft sub" data-r>30 minutes. A plan and a fixed price in 48 hours.</p>
       <div class="book" data-r>
-        <div class="calendly-inline-widget cal" data-url="https://calendly.com/scott-scottmcfall/30min?hide_gdpr_banner=1"></div>
+        <div class="calwrap">
+          <div id="cal" class="cal">
+            <div class="cal__wait" aria-hidden="true">
+              <span class="cal__bar"></span><span class="cal__bar cal__bar--short"></span>
+              <span class="cal__grid">{Array.from({ length: 35 }, () => <i></i>)}</span>
+              <span class="cal__msg">Loading calendar…</span>
+            </div>
+          </div>
+          <p class="small soft cal__alt">Calendar slow to load? <a class="link" href="https://calendly.com/scott-scottmcfall/30min" target="_blank" rel="noopener noreferrer">Open it in Calendly</a></p>
+        </div>
         <form action="https://formspree.io/f/xwvnnpoy" method="POST" class="form">
           <p class="form__head">Not ready to book? Send a note.</p>
           <div><label for="name">Name</label><input id="name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name" /></div>
@@ -248,7 +262,6 @@ const filters = [
     <a href="https://github.com/scottmcfalldev-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
   </footer>
 
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
   <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
   <script>
@@ -449,6 +462,25 @@ const filters = [
       }), '.');
     }
 
+    // ── Calendly inline: start loading ~one screen early, show it once it has rendered ──
+    const calBox = $('cal');
+    const showCal = () => calBox.classList.add('is-ready');
+    addEventListener('message', (e) => {
+      if (e.origin !== 'https://calendly.com') return;
+      const { event, payload } = e.data ?? {};
+      // page_height fires at ~26px while Calendly is still on its spinner; a real page is hundreds of px
+      if (event === 'calendly.event_type_viewed' || (event === 'calendly.page_height' && parseInt(payload?.height) > 200)) showCal();
+    });
+    const mountCal = () => {
+      const cal = (window as any).Calendly;
+      if (!cal?.initInlineWidget) return void setTimeout(mountCal, 150);
+      cal.initInlineWidget({ url: 'https://calendly.com/scott-scottmcfall/30min?hide_gdpr_banner=1', parentElement: calBox });
+      setTimeout(showCal, 12000); // never hide it forever if Calendly sends no message
+    };
+    new IntersectionObserver(([e], obs) => {
+      if (e.isIntersecting) { obs.disconnect(); mountCal(); }
+    }, { rootMargin: '1000px 0px' }).observe(calBox);
+
     // ── Calculator → booking ──
     const CALENDLY_URL = 'https://calendly.com/scott-scottmcfall/30min';
     $('calcCta').addEventListener('click', (e) => {
@@ -605,7 +637,20 @@ const filters = [
   .form label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; }
   .form input, .form select, .form textarea { width: 100%; }
   .form textarea { resize: vertical; }
-  .cal { min-width: 280px; height: 640px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .cal { position: relative; min-width: 280px; height: 640px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .cal iframe { position: relative; z-index: 1; opacity: 0; transition: opacity 0.4s var(--ease); }
+  .cal.is-ready iframe { opacity: 1; }
+  .cal .calendly-spinner { display: none; }
+  .cal__wait { position: absolute; inset: 0; display: grid; align-content: start; gap: 0.75rem; padding: 2rem; }
+  .cal__bar { height: 1rem; width: 55%; border-radius: 6px; background: var(--line); }
+  .cal__bar--short { width: 35%; }
+  .cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.6rem; margin-top: 1rem; }
+  .cal__grid i { aspect-ratio: 1; border-radius: 50%; background: var(--bg); }
+  .cal__msg { margin-top: 1rem; color: var(--soft); font-size: 0.9rem; text-align: center; }
+  .cal.is-ready .cal__wait { display: none; }
+  .cal__alt { margin: 0.6rem 0 0; }
+  @media (prefers-reduced-motion: no-preference) { .cal__bar, .cal__grid i { animation: calPulse 1.4s ease-in-out infinite alternate; } }
+  @keyframes calPulse { to { opacity: 0.45; } }
 
   /* faq */
   .faq { columns: 2; column-gap: 2rem; }
