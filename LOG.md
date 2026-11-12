@@ -1,5 +1,11 @@
 # LOG
 
+## 2026-11-12 · Calendly embed loading
+- **Found:** the slow booking box is Calendly's side: their booking app waits on its own `api/booking/initial_settings` call (sometimes never finishes in the in-app browser, even on calendly.com directly). Our page loads their script in under 10ms.
+- **Done:** `src/pages/index.astro`: preconnect to Calendly and widget.css moved into the head; the embed starts loading about a screen before the booking section; a calendar-shaped placeholder shows until the calendar has actually rendered (Calendly's `event_type_viewed`, or a `page_height` over 200px, with a 12s fallback); "Calendar slow to load? Open it in Calendly" link under the box. Build passes; checked in a local preview (calendar fades in, placeholder works, calculator popup still works).
+- **Waiting on:** Scott: OK to commit and push (branch `minimal-motion`).
+- **Ideas:** swap the inline embed for a "Pick a time" popup button if it's still slow for visitors.
+
 ## 2026-11-10 · Pricing research for automation builds
 - **Done:** Scott flagged that the site reads as one flat $2,500 for any build. That number was an unresearched ballpark from the 9 Nov plan. Researched market rates: an invoice-based rate card (54 operators, Jan–Jun 2026) puts intermediate builders at about $90–155/hr, simple flat-fee builds at $650–1,800, multi-step at $1,800–8,500, big rebuilds $8,500+, and "care" retainers at $650–1,200/mo. Agency guides put small-business setups at $1,500–5,000 per workflow. Recommended sized fixed quotes: Small $1,500–2,500, Standard $2,500–5,000, Large $5,000+ or phased. Each quote is estimated hours × ~$125 + 30% buffer, with written scope and changes priced separately. Keep $750/mo; founding offer becomes 40% off.
 - **Done (later):** Scott approved. Site now says "First automation: From $1,500 … most run $1,500 to $5,000, fixed quote"; founding offer is 40% off the first build; FAQ cost and timing answers and the hero line match (`src/pages/index.astro`). Build passes; pricing section checked in the browser. Scott Social email in the tracker now says 40% off.
